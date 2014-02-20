@@ -1,5 +1,5 @@
 define([
-], function(
+'backbone','views/game', 'views/scoreboard', 'views/main'], function(Backbone, game, main, scoreboard
 ){
 
     var Router = Backbone.Router.extend({
@@ -9,13 +9,13 @@ define([
             '*default': 'defaultActions'
         },
         defaultActions: function () {
-            // TODO
+            
         },
         scoreboardAction: function () {
             // TODO
         },
         gameAction: function () {
-            // TODO
+            
         }
     });
 

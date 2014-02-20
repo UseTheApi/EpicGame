@@ -13,6 +13,7 @@ define([
             // TODO
         },
         render: function () {
+            alerr('main view');
             // TODO
         },
         show: function () {

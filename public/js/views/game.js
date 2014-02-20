@@ -14,6 +14,8 @@ define([
         },
         render: function () {
             // TODO
+            alert('1111');
+            $('#page').html(tmpl());
         },
         show: function () {
             // TODO

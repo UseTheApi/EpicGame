@@ -9,7 +9,7 @@ require.config({
     shim: {
         'backbone': {
             deps: ['underscore', 'jquery'],
-            exports: 'Backbone'
+            exports: 'Backbone' /* экспортируемая переменная */
         },
         'underscore': {
             exports: '_'
