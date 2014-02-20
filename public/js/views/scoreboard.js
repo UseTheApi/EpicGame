@@ -20,7 +20,6 @@ define([
         render: function () {
         },
         show: function () {
-            console.log(this.Scores.mmm);
             this.$el.html(this.template({Scores : this.Scores.models}));
         },
         hide: function () {
