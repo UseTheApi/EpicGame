@@ -4,8 +4,8 @@
     	<div id="GameName"> <h1>Epic game</h1> </div>
     	<div id="PanelName"> <h1> Main Menu</h1></div>
         <ul>
-        	<div class="menuItem" ><li class="menuElement"> <h3> <a href="#" id="js-scoreboard">Scoreboard</a> </h3> </li> </div>
-        	<div class="menuItem"> <li class="menuElement"> <h3> <a href="#" id="js-start-game">Start game</a> </h3> </li> </div>
+        	<div class="menuItem" ><li class="menuElement"> <h3> <a href="#scoreboard" >Scoreboard</a> </h3> </li> </div>
+        	<div class="menuItem"> <li class="menuElement"> <h3> <a href="#game" >Start game</a> </h3> </li> </div>
 		</ul>
     </div>
 </fest:template>

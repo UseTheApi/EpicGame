@@ -4,7 +4,7 @@
     	<div id="GameName"> <h1>Game</h1> </div>
     	
         <ul>
-        	<div class="menuItem"> <li class="menuElement"> <h3> <a href="#" id="js-back-main"> Back </a> </h3> </li></div>
+        	<div class="menuItem"> <li class="menuElement"> <h3> <a href="#" > Back </a> </h3> </li></div>
 		</ul>
 
     </div>

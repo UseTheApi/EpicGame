@@ -12,7 +12,7 @@ define([
             main.show();
         },
         scoreboardAction: function () {
-            // TODO
+            scoreboard.show();
         },
         gameAction: function () {
             game.show();

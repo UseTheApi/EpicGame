@@ -1,25 +1,29 @@
 define([
     'backbone',
-    'tmpl/scoreboard'
+    'tmpl/scoreboard',
+    'collections/scores'
 ], function(
     Backbone,
-    tmpl
+    tmpl,
+    ScoreCollection
 ){
 
     var View = Backbone.View.extend({
 
         template: tmpl,
+        Scores : ScoreCollection,
+        el: $('#page'),
+
         initialize: function () {
-            // TODO
+            
         },
         render: function () {
-            // TODO
         },
         show: function () {
-            // TODO
+            console.log(this.Scores.mmm);
+            this.$el.html(this.template({Scores : this.Scores.models}));
         },
         hide: function () {
-            // TODO
         }
 
     });
