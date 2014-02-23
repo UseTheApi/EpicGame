@@ -1,21 +1,35 @@
 <?xml version="1.0"?>
 <fest:template xmlns:fest="http://fest.mail.ru" context_name="json">
-    <div id="Panel">
-    	<div id="GameName"> <h1>Epic game</h1> </div>
-    	<div id="PanelName"> <h1> Scoreboard</h1></div>
-         <table> <tr><th>#</th> <th> Name </th> <th> Score </th></tr>
-       	
+    <div class="scoreboard">
+    	<div class="scoreboard__game-name">
+            <h1>Epic game</h1>
+        </div>
+    	<div class="scoreboard__panel-name">
+            <h2>Scoreboard</h2>
+        </div>
+        <table class="scoreboard__table">
+            <tr>
+                <th>#</th>
+                <th>Name</th>
+                <th>Score</th>
+            </tr>       	
         	<fest:for iterate="json.Scores" index="i">
-        		<tr>
-        		   <td> <fest:value>i+1</fest:value> </td>
-        			<td> <fest:value>json.Scores[i].attributes.name</fest:value> </td>
-        		    <td><fest:value>json.Scores[i].attributes.score</fest:value> </td>
-        		</tr>
+        	<tr>
+        		<td>
+                    <fest:value>i+1</fest:value>
+                </td>
+        		<td>
+                    <fest:value>json.Scores[i].attributes.name</fest:value>
+                </td>
+        		<td>
+                    <fest:value>json.Scores[i].attributes.score</fest:value>
+                </td>
+        	</tr>
             </fest:for>
-
         </table>
-        	<div class="menuItem">  <h3> <a href="#"> Back </a> </h3> </div>
-
+        <div class="scoreboard__menu-item">
+            <a href="#">Back</a>
+        </div>
     </div>
 </fest:template>
 

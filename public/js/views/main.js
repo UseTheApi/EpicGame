@@ -9,7 +9,7 @@ define([
     var View = Backbone.View.extend({
    
         template: tmpl,
-        el: $('#page'),
+        el: $('.page'),
         initialize: function () {
             // TODO
         },
