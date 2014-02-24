@@ -12,7 +12,7 @@ define([
 
         template: tmpl,
         Scores : ScoreCollection,
-        el: $('#page'),
+        el: $('.page'),
 
         initialize: function () {
             
