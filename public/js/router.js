@@ -2,6 +2,7 @@ define([
 'backbone','views/game', 'views/scoreboard', 'views/main'], function(Backbone, game, scoreboard, main
 ){
 
+
     var Router = Backbone.Router.extend({
         routes: {
             'scoreboard': 'scoreboardAction',
@@ -9,7 +10,7 @@ define([
             '*default': 'defaultActions'
         },
         defaultActions: function () {
-            main.show();
+            main.show();   
         },
         scoreboardAction: function () {
             scoreboard.show();

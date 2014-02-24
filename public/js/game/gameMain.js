@@ -6,19 +6,25 @@ define([
     var cnvs;
     var ctx;
     var stars = [];
+    var numOfStars = 13;
+    var interval;
 
     function gameInit(canvas) {
         cnvs = canvas;
         ctx = cnvs.getContext("2d");
         ctx.fillRect(0, 0, cnvs.width, cnvs.height);
 
-        createStars(10);
+        createStars(numOfStars);
 
-        this.stop = function() { /* TODO stop rendering */
+        var backBtn =  document.getElementById("backBtn");
+        backBtn.onclick = gameStop;
 
-        }
+        interval = setInterval(renderSky, 1000/fps);
+    }
 
-        setInterval(renderSky, 1000/fps);
+    function gameStop() {
+        deleteStars();
+        clearInterval(interval);
     }
 
 
@@ -35,9 +41,9 @@ define([
         this.radius = r;
     }
 
-    function createStars(amount) {
+    function createStars(amount, _pos) {
         for (i = 0; i < amount; i++) {
-            var x = Math.floor(Math.random() * cnvs.width)
+            var x = _pos || Math.floor(Math.random() * cnvs.width)
             var y = Math.floor(Math.random() * cnvs.height)
             var r = Math.floor(Math.random() * 5 + 1)
             var star = new Star(x,y,r);
@@ -45,12 +51,18 @@ define([
         }
     }
 
-    function moveStars() {
+    function deleteStars() {
         for(i = 0; i < stars.length; i++) {
-                stars[i].x -= stars[i].radius;
+            stars.splice(i,1);
+        }
+    }
+
+    function moveStars(_speed) {
+        for(i = 0; i < stars.length; i++) {
+                stars[i].x -= (_speed || 3);
                 if(stars[i].x <= 0 ) {
                     stars.splice(i, 1);
-                    createStars(1);
+                    createStars(1,cnvs.width);
             }   
         }
     }
@@ -64,6 +76,7 @@ define([
             ctx.fill();
         }
     }
+
 
     return gameInit;
 });

@@ -3,7 +3,7 @@
 
     <ul>
         <li class="game__menu-element">
-            <a href="#" >Back</a>
+            <a href="#" id="backBtn" >Back</a>
         </li>
     </ul>
     <canvas id="game__scene" width="600" height="450"></canvas>
