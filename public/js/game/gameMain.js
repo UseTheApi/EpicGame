@@ -8,24 +8,29 @@ define([
     var stars = [];
     var numOfStars = 15;
     var interval;
+    var running = false;
 
     function gameInit(canvas) {
         cnvs = canvas;
         ctx = cnvs.getContext("2d");
         ctx.fillRect(0, 0, cnvs.width, cnvs.height);
 
-        createStars(numOfStars);
-
-        var backBtn =  document.getElementById("backBtn");
-        backBtn.onclick = gameStop;
-
-        $(window).bind("keypress", gameStart)
+        $("#backBtn").on('click', gameStop);
+        $(window).bind("keypress", gameStart);
         greeting();
 
     }
-    function gameStart() {
+    function gameStart(key) {
+       // alert(key.which);
+        createStars(numOfStars);
         interval = setInterval(renderSky, 1000/fps);
         $(window).unbind("keypress");
+        $(window).bind("keypress", keyHandler);
+        running = true;
+    }
+
+    function keyHandler() {
+        // todo
     }
 
     function greeting() {
@@ -41,8 +46,13 @@ define([
     }
 
     function gameStop() {
-        deleteStars();
-        clearInterval(interval);
+        $("#backBtn").off('click', gameStop);
+        $(window).unbind("keypress");
+        if(running) {
+          deleteStars();
+          clearInterval(interval);
+          running = false;
+        }
     }
 
 
