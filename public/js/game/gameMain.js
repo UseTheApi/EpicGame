@@ -19,12 +19,13 @@ define([
         var backBtn =  document.getElementById("backBtn");
         backBtn.onclick = gameStop;
 
-        window.onkeypress = gameStart;
+        $(window).bind("keypress", gameStart)
         greeting();
 
     }
     function gameStart() {
         interval = setInterval(renderSky, 1000/fps);
+        $(window).unbind("keypress");
     }
 
     function greeting() {
