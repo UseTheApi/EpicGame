@@ -6,7 +6,7 @@ define([
     var cnvs;
     var ctx;
     var stars = [];
-    var numOfStars = 13;
+    var numOfStars = 15;
     var interval;
 
     function gameInit(canvas) {
@@ -19,7 +19,24 @@ define([
         var backBtn =  document.getElementById("backBtn");
         backBtn.onclick = gameStop;
 
+        window.onkeypress = gameStart;
+        greeting();
+
+    }
+    function gameStart() {
         interval = setInterval(renderSky, 1000/fps);
+    }
+
+    function greeting() {
+        ctx.font="30px Verdana";
+        // Create gradient
+        var gradient = ctx.createLinearGradient(0,0,cnvs.width,0);
+        gradient.addColorStop("0","magenta");
+        gradient.addColorStop("0.5","blue");
+        gradient.addColorStop("1.0","red");
+        // Fill with gradient
+        ctx.fillStyle = gradient;
+        ctx.fillText("To start game press anykey!",cnvs.width/2-200,cnvs.height/2); 
     }
 
     function gameStop() {
