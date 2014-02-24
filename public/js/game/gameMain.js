@@ -47,12 +47,10 @@ define([
 
 	function moveStars() {
 		for(i = 0; i < stars.length; i++) {
-			//if(stars[i] != undefined) {
 				stars[i].x -= stars[i].radius;
 				if(stars[i].x <= 0 ) {
 					stars.splice(i, 1);
 					createStars(1);
-			//	}	
 			}	
 		}
 	}
@@ -60,7 +58,7 @@ define([
 	function drawStars() {
 		for(i = 0; i < stars.length; i++) {
 			ctx.fillStyle = "white";
-	        ctx.beginPath();
+			ctx.beginPath();
 	        ctx.arc(stars[i].x , stars[i].y, stars[i].radius, 0, Math.PI * 2, true);
 	        ctx.closePath();
 	        ctx.fill();
