@@ -19,7 +19,7 @@ define([
         },
         show: function () {
             this.$el.html(this.template);
-            Game.run(document.getElementById(this.gameCanvas));
+            Game(document.getElementById(this.gameCanvas));
         },
         hide: function () {
         }

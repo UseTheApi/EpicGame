@@ -1,29 +1,71 @@
 define([
 ], function(
 ){
-	var Game = {
-		fps : 60,
-		context : null,
-		canvas : null,
-		run : function(canvas) {
-			this.canvas = canvas;
-			this.context = canvas.getContext("2d");
-			this.context.fillRect(0, 0, canvas.width, canvas.height);
-			this.context.fillStyle    = '#fff';			
-			this.context.fillRect(0, 0, canvas.width/2, canvas.height/2);
-			//this.context.fillRect(0, 0, canvas.width, canvas.height);
-			this.greeting();
 
-		},
+	var fps = 60;
+	var cnvs;
+	var ctx;
+	var stars = [];
 
-		greeting : function() {
-			this.context.fillStyle    = '#fff';
-			this.context.font         = 'italic 30px sans-serif';
-			this.context.textBaseline = 'top';
-			this.context.font         = 'bold 30px sans-serif';
-			this.context.strokeText('Hello world!', 0, 50);
+	function gameInit(canvas) {
+		cnvs = canvas;
+		ctx = cnvs.getContext("2d");
+		ctx.fillRect(0, 0, cnvs.width, cnvs.height);
+
+		createStars(10);
+
+		this.stop = function() { /* TODO stop rendering */
+
 		}
-	};
 
-	return Game;
+		setInterval(renderSky, 1000/fps);
+	}
+
+
+	function renderSky() {
+		 moveStars(); 
+		 ctx.fillStyle = "black";
+		 ctx.fillRect(0, 0, cnvs.width, cnvs.height);
+		 drawStars();
+	}
+
+	function Star(x,y,r) {
+		this.x = x;
+		this.y = y;
+		this.radius = r;
+	}
+
+	function createStars(amount) {
+		for (i = 0; i < amount; i++) {
+			var x = Math.floor(Math.random() * cnvs.width)
+          	var y = Math.floor(Math.random() * cnvs.height)
+			var r = Math.floor(Math.random() * 5 + 1)
+			var star = new Star(x,y,r);
+			stars.push(star);
+        }
+	}
+
+	function moveStars() {
+		for(i = 0; i < stars.length; i++) {
+			//if(stars[i] != undefined) {
+				stars[i].x -= stars[i].radius;
+				if(stars[i].x <= 0 ) {
+					stars.splice(i, 1);
+					createStars(1);
+			//	}	
+			}	
+		}
+	}
+
+	function drawStars() {
+		for(i = 0; i < stars.length; i++) {
+			ctx.fillStyle = "white";
+	        ctx.beginPath();
+	        ctx.arc(stars[i].x , stars[i].y, stars[i].radius, 0, Math.PI * 2, true);
+	        ctx.closePath();
+	        ctx.fill();
+		}
+	}
+
+	return gameInit;
 });
