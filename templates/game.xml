@@ -1,5 +1,7 @@
 <?xml version="1.0"?>
 <fest:template xmlns:fest="http://fest.mail.ru" context_name="json">
+	    <canvas id="gameScene" width="600" height="450" style="border: 1px solid black"></canvas>
+
     <div id="Panel">
     	<div id="GameName"> <h1>Game</h1> </div>
     	
@@ -8,6 +10,5 @@
 		</ul>
 
     </div>
-    <canvas width="600" height="450"></canvas>
 
 </fest:template>
