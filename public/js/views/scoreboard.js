@@ -18,9 +18,10 @@ define([
             
         },
         render: function () {
+            this.$el.html(this.template({Scores : this.Scores.models}));
         },
         show: function () {
-            this.$el.html(this.template({Scores : this.Scores.models}));
+            this.render();
         },
         hide: function () {
         }

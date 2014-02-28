@@ -39,7 +39,7 @@ a:hover {color:#FF00FF; text-decoration:none;}   /* mouse over link */
 a:active {color:#0000FF; text-decoration:none;}  /* selected link */
 
 .main, .game, .scoreboard {
-    top: 50%;
+    top: 50%;	
     left: 50%;
     width:16em;
     height:22em;

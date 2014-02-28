@@ -11,17 +11,20 @@ define([
     var View = Backbone.View.extend({
 
         template: tmpl,
-        gameCanvas: 'game__scene',
         el: $('.page'),
+        game: null,
         initialize: function () {
         },
         render: function () {
+            this.$el.html(this.template);
+            this.game = new Game($('.game__scene')[0]);
+            //this.game.Start();
         },
         show: function () {
-            this.$el.html(this.template);
-            Game(document.getElementById(this.gameCanvas));
+            this.render();
         },
         hide: function () {
+            this.game.Stop()
         }
 
     });

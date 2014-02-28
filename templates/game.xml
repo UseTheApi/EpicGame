@@ -3,8 +3,8 @@
 
     <ul>
         <li class="game__menu-element">
-            <a href="#" id="backBtn" >Back</a>
+            <a href="#" >Back</a>
         </li>
     </ul>
-    <canvas id="game__scene" width="600" height="450"></canvas>
+    <canvas class="game__scene" width="900" height="450"></canvas>
 </fest:template>
