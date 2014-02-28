@@ -18,7 +18,6 @@ define([
         render: function () {
             this.$el.html(this.template);
             this.game = new Game($('.game__scene')[0]);
-            //this.game.Start();
         },
         show: function () {
             this.render();

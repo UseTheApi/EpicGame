@@ -6,5 +6,6 @@
             <a href="#" >Back</a>
         </li>
     </ul>
-    <canvas class="game__scene" width="900" height="450"></canvas>
+
+    <canvas class="game__scene" width="600" height="450"></canvas>
 </fest:template>
