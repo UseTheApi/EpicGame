@@ -1,10 +1,12 @@
 define([
     'backbone',
+    'views/ViewManager',
     'views/game', 
     'views/scoreboard', 
-    'views/main'
+    'views/main',
 ], function(
     Backbone,
+    ViewManager,
     game, 
     scoreboard,
     main
@@ -18,19 +20,13 @@ define([
             '*default': 'defaultActions'
         },
         defaultActions: function () {
-            if(current == 'game') {
-             game.hide();   
-            } 
             main.show();   
-            current = 'main';
         },
         scoreboardAction: function () {
             scoreboard.show();
-            current = 'scoreboard';
         },
         gameAction: function () {
             game.show();
-            current = 'game';
         }
     });
     return new Router();

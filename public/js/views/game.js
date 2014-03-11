@@ -1,29 +1,36 @@
 define([
     'backbone',
     'tmpl/game',
-    'game/gameMain'
+    'game/gameMain',
+    'views/ViewManager'
 ], function(
     Backbone,
     tmpl,
-    Game
+    Game,
+    VM
 ){
 
     var View = Backbone.View.extend({
 
         template: tmpl,
-        el: $('.page'),
+        el: $('#game'),
         game: null,
+        viewName: "game",
         initialize: function () {
+       
         },
         render: function () {
             this.$el.html(this.template);
             this.game = new Game($('.game__scene')[0]);
         },
         show: function () {
+            VM.trigger('showView', { name: this.viewName, view : this });
             this.render();
+            this.$el.show();
         },
         hide: function () {
-            this.game.Stop()
+            this.game.Stop();
+            this.$el.hide();
         }
 
     });
