@@ -15,9 +15,7 @@ define([
     	}
     });
   	 
-  	 var models = [{name : 'andrew', score : 322}, {name : 'eee', score : 334}, 
-  	 			   {name : 'bbb', score : 13}, 	   {name : 'h4ck', score : 1337}
-  	 			   ];
+  	
 
-    return new ScoresCollection(models);
+    return new ScoresCollection();
 });

@@ -10,6 +10,10 @@ h3 {
 	padding: 0.6em;
 }
 
+#status {
+	color: red;
+}
+
 .main__menu-element, .game__menu-element, .scoreboard__menu-item {
 	color: white;
 	background-color: #4a4a4a;
@@ -22,6 +26,8 @@ h3 {
 	width: 100px;
 	text-align: center;
 }
+
+
 
 .game__menu-element:before, .scoreboard__menu-item:before {
 	content: "";
@@ -42,14 +48,27 @@ a:active {color:#0000FF; text-decoration:none;}  /* selected link */
     top: 50%;	
     left: 50%;
     width:16em;
-    height:22em;
-    margin-top: -11em; /*set to a negative number 1/2 of your height*/
+    height:26em;
+    margin-top: -13em; /*set to a negative number 1/2 of your height*/
     margin-left: -8em; /*set to a negative number 1/2 of your width*/
     border: 1px solid #ccc;
     background-color: #FFFFFF;
     position:fixed;
     text-align: center;
 }
+
+.game__screen {
+	
+	left: 30%;
+	position:fixed;
+}
+
+.gameover__form {
+	position: absolute;
+	top: 72%;
+	left: 32%;
+}
+
 .main__game-name, .game__game-name, .scoreboard__game-name{
 	background-color: #4a4a4a;
 	color: white;

@@ -5,9 +5,11 @@ define([
 ){
 
 	var SpaceShip = Class.$extend({
-		__init__ : function(x,y,src) {
+		__init__ : function(x,y,src,cnvs) {
 			var ship = this;
+			var game = game;
 			this.direction = '';
+			this.cnvs = cnvs;
 			this.x = x;
 			this.y = y;
 			this.dy = 2; 
@@ -24,31 +26,31 @@ define([
         	}
 		},
 
-		update : function(keys) {
+		update : function(game) {
 
-			if(keys[38]) { // up
+			if(game.keys[38]) { // up
 				this.vy = -this.dy; this.direction = ''; 
 			}
-			if(keys[40]) { //down
+			if(game.keys[40]) { //down
 				this.vy = this.dy; this.direction = '';  
 
 			}
-			if(keys[37]) { // back
+			if(game.keys[37]) { // back
 				this.vx = -this.dx; this.direction = ''; 
 
-
 			}
-			if(keys[39]) { // forward
+			if(game.keys[39]) { // forward
 				this.vx = this.dx; this.direction = ''; 
-
-
 			}
 
 			this.vy += this.gravity;
 			this.y += this.vy;
 			this.x += this.vx;
-			this.vy *=0.98;
-			this.vx *=0.98;
+			this.vy *= 0.98; // friction 
+			this.vx *= 0.98;
+			if(this.y > this.cnvs.width-178-22) {
+			 game.trigger("SpaceShipCrash");
+			} 
 		},
 
 		draw : function(ctx) {

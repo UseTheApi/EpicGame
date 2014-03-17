@@ -17,10 +17,17 @@ define([
         el: $('#scoreboard'),
         viewName: "scoreboard",
 
+
         initialize: function () {
+            
         },
         render: function () {
-            this.$el.html(this.template({Scores : this.Scores.models}));
+            var view = this;
+            this.Scores.url = '/scores';
+            this.Scores.fetch({ success: function() {
+              console.log(view.Scores.models);
+                view.$el.html(view.template({Scores : view.Scores.models.slice(0,5)}));
+            }});
         },
         show: function () {
             VM.trigger('showView', { name: this.viewName, view : this });

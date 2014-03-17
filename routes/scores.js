@@ -1,6 +1,6 @@
 var scores = [],
 	id = 0;
-
+console.log(scores);
 function sortScores(){
 	scores.sort(function(a,b){
 		return a.score < b.score;
