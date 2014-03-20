@@ -57,6 +57,15 @@ a:active {color:#0000FF; text-decoration:none;}  /* selected link */
     text-align: center;
 }
 
+.loading {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin-left: -89px; /* -1 * image width / 2 */
+    margin-top: -76px;  /* -1 * image height / 2 */
+    display: block;     
+}
+
 .game__screen {
 	
 	left: 30%;

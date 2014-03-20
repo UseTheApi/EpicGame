@@ -19,7 +19,7 @@ define([
         __init__ : function(canvas) {
             _.extend(this, Backbone.Events);
           
-            this.fps = 30;
+            this.fps = 10;
             this.StarsAmount = 22;
             this.running = false;
             this.cnvs = canvas;
@@ -45,6 +45,7 @@ define([
             $(window).bind("keypress", function() { 
 
                 game.StarSky.createStars(this.StarsAmount);
+                
                 game.interval = setInterval(function() { game.score +=1; game.render(); }, 1000/this.fps);
                 $(window).unbind("keypress");
 

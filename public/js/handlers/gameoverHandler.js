@@ -9,33 +9,41 @@ define([
 ){
     function gameOverHandler(event) {
         event.preventDefault(); // no default action
-        var data = $(this).serialize();
+        var dataArr = $(this).serializeArray();
+        var PlayerName = dataArr[0]["value"];
+        var PlayerScore = dataArr[1]["value"];
+        var scores = [];
+        if(localStorage["scores"] != undefined) {
+            scores =  JSON.parse(localStorage["scores"]);
+        }
+        if(PlayerName === "") {
+            $("#status").html("Empty data");
+        } else {
+        Scoreboard.add(new Score({"name" : PlayerName, "score" : PlayerScore}));
         $(".gameover__button-submit").prop("disabled",true);
         $("#status").html("Wait...");
 
         $.ajax({
             url : '/scores',
             type: 'post',
-            data: data,
+            data: dataArr,
             dataType: 'json',
-            success: function(msg) {
-                var player = new Score({
-                    name: msg["name"],
-                    score: msg["score"]
-                });         
-            }
         })
+
         .done(function() {
             $(".gameover__button-submit").prop("disabled",false);
             $("#status").html("");
-            window.location='/#scoreboard';
+            ScoreboardView.show();
         })
+
         .fail(function(){
+            scores.push({"name" : PlayerName, "score" : PlayerScore})
+            localStorage["scores"] = JSON.stringify(scores); // save it 
             $(".gameover__button-submit").prop("disabled",false);
-            $("#status").text("Enter valid data");
+            $("#status").html("Your data was saved.");
+            ScoreboardView.show();
         })
-        .always(function(){
-        })
+    }
     }
     return gameOverHandler;
 });

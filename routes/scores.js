@@ -9,19 +9,23 @@ function sortScores(){
 
 module.exports = {
 	getFull: function(req, res){
-		var s;
-		if (req.query.limit && !isNaN(parseInt(req.query.limit, 10))){
-			s = [];
-			for (var i = 0, l = scores.length, li = req.query.limit; i < l && i < li; i++){
-				s.push(scores[i]);
+		setTimeout(function() {
+			var s;
+			if (req.query.limit && !isNaN(parseInt(req.query.limit, 10))){
+				s = [];
+				for (var i = 0, l = scores.length, li = req.query.limit; i < l && i < li; i++){
+					s.push(scores[i]);
+				}
+			} else {
+				s = scores;
 			}
-		} else {
-			s = scores;
-		}
-		s = JSON.stringify(s);
-		res.setHeader('Content-Type', 'application/javascript');
-		res.setHeader('Content-Length', Buffer.byteLength(s));
-		res.end(s);
+			s = JSON.stringify(s);
+			res.setHeader('Content-Type', 'application/javascript');
+			res.setHeader('Content-Length', Buffer.byteLength(s));
+			res.end(s);
+
+		},500) // just to test loading img :)
+	
 	},
 
 	getOne: function(req, res){
