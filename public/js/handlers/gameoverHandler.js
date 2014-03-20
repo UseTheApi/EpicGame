@@ -13,12 +13,14 @@ define([
         var PlayerName = dataArr[0]["value"];
         var PlayerScore = dataArr[1]["value"];
         var scores = [];
+        
         if(localStorage["scores"] != undefined) {
             scores =  JSON.parse(localStorage["scores"]);
         }
         if(PlayerName === "") {
             $("#status").html("Empty data");
         } else {
+
         Scoreboard.add(new Score({"name" : PlayerName, "score" : PlayerScore}));
         $(".gameover__button-submit").prop("disabled",true);
         $("#status").html("Wait...");
