@@ -66,16 +66,22 @@ a:active {color:#0000FF; text-decoration:none;}  /* selected link */
     display: block;     
 }
 
+.game__sceen {
+	position: fixed;
+}
+
 .game__screen {
-	
-	left: 30%;
 	position:fixed;
 }
 
 .gameover__form {
 	position: absolute;
-	top: 72%;
-	left: 32%;
+	text-align: center;
+	color: blue;
+	font-size: 24pt;
+	font-style: italic;
+	margin: 200px;
+	left: 19%;
 }
 
 .main__game-name, .game__game-name, .scoreboard__game-name{

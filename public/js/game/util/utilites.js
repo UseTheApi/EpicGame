@@ -21,19 +21,6 @@ define([
 			ctx.fillStyle = gradient;
 			ctx.fillText("To start game press anykey!",this.cnvs.width/2-200,this.cnvs.height/2); 
 		},
-
-		gameover : function(ctx,score) {
-			ctx.font="30px Verdana";
-			var gradient = ctx.createLinearGradient(0,0,this.cnvs.width,0);
-			gradient.addColorStop("0","magenta");
-			gradient.addColorStop("0.5","blue");
-			gradient.addColorStop("1.0","red");
-			ctx.fillStyle = gradient;
-			ctx.fillText("Game over!",this.cnvs.width/2-110,this.cnvs.height/2); 
-			ctx.fillText("Your score: "+score,this.cnvs.width/2-110,this.cnvs.height/2+40); 
-			ctx.fillText("Enter your name: ",this.cnvs.width/2-110,this.cnvs.height/2+80); 
-		},
-
 		drawscore: function(ctx, score) {
 			ctx.font="15px Verdana";
 			var gradient = ctx.createLinearGradient(0,0,this.cnvs.width,0);

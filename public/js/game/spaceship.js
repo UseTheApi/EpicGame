@@ -3,7 +3,6 @@ define([
 ], function(
 	Class
 ){
-
 	var SpaceShip = Class.$extend({
 		__init__ : function(x,y,src,cnvs) {
 			var ship = this;
@@ -45,7 +44,7 @@ define([
 				this.vx = this.dx; this.direction = ''; 
 			}
 
-		//	this.vy += this.gravity; // need gravity or not?
+			//this.vy += this.gravity; // need gravity or not?
 			this.y += this.vy;
 			this.x += this.vx;
 			this.vy *= 0.98; // friction 

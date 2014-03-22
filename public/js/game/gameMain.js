@@ -4,6 +4,7 @@ define([
     'game/util/utilites',
     'game/spaceship',
     'game/starsky',
+    'game/spaceGarbage',
     'views/gameover',
 ], function(
     Backbone,
@@ -11,6 +12,7 @@ define([
     Util,
     SpaceShip,
     StarSky,
+    AsteroidContainer,
     GOView
 ){
 
@@ -21,6 +23,7 @@ define([
           
             this.fps = 10;
             this.StarsAmount = 22;
+            this.AsteroidAmount = 5;
             this.running = false;
             this.cnvs = canvas;
             this.test = 'fafd';
@@ -32,6 +35,7 @@ define([
             this.Util.greeting(this.ctx);
             this.SpaceShip = new SpaceShip(0, this.cnvs.height / 2, 'imgs/rocket.png',canvas); // need resource handler
             this.StarSky = new StarSky(this.cnvs, this.StarsAmount);
+            this.AsteroidContainer = new AsteroidContainer(this.cnvs, this.AsteroidAmount);
 
             this.gameoverView = new GOView();
             this.on("SpaceShipCrash", function() {
@@ -45,6 +49,8 @@ define([
             $(window).bind("keypress", function() { 
 
                 game.StarSky.createStars(this.StarsAmount);
+
+                game.AsteroidContainer.createAsteroids(this.AsteroidAmount);
                 
                 game.interval = setInterval(function() { game.score +=1; game.render(); }, 1000/this.fps);
                 $(window).unbind("keypress");
@@ -63,19 +69,26 @@ define([
                 if(this.running) {
                   if(gameover) {
                     this.Util.clear(this.ctx);
-                    this.Util.gameover(this.ctx,this.score);
                     this.gameoverView.show(this.score);
                   }
                   $(window).unbind("keypress");
                   this.StarSky.deleteStars();
+                  this.AsteroidContainer.deleteAsteroids();
                   clearInterval(this.interval);
                   this.running = false;
                 }
         },
 
+        clearcanvas : function(ctx) {
+            ctx.fillStyle = "black";
+            ctx.fillRect(0, 0, this.cnvs.width, this.cnvs.height);
+        },
+
 
         render : function() {
-            this.StarSky.draw(this.ctx);
+            this.clearcanvas(this.ctx);
+            this.StarSky.draw(this.ctx)
+            this.AsteroidContainer.draw(this.ctx);
             this.SpaceShip.draw(this.ctx);
             this.Util.drawscore(this.ctx,this.score);
             this.SpaceShip.update(this); // update pos of ship and etc..

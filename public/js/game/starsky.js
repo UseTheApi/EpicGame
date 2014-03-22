@@ -46,8 +46,6 @@ define([
 			            this.createStars(1,this.cnvs.width);
 			    }   
 			}
-			
-			this.clearcanvas(ctx);
 
 			for(i = 0; i < this.stars.length; i++) {
 			    ctx.fillStyle = "white";
@@ -57,11 +55,6 @@ define([
 			    ctx.fill();
 			}
 		},
-
-		clearcanvas : function(ctx) {
-			ctx.fillStyle = "black";
-			ctx.fillRect(0, 0, this.cnvs.width, this.cnvs.height);
-		}
 	})
 	return StarSky;
 });
