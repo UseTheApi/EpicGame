@@ -22,10 +22,10 @@ define([
 
 		createAsteroids : function(amount, _pos) {
 			for (i = 0; i < amount; i++) {
-			    var x = _pos || Math.floor(Math.random() * this.cnvs.width)
+			    var x = _pos || Math.floor(Math.random() * this.cnvs.width*0.3) + this.cnvs.width*0.7
 			    var y = Math.floor(Math.random() * this.cnvs.height)
-			    var r = Math.floor(Math.random() * 10 + 20)
-			    var sp = Math.floor(Math.random() * 3 + 1)
+			    var r = Math.floor(Math.random() * 26 + 25)
+			    var sp = Math.floor(Math.random() * 5 + 2)
 			    var asteroid = new Asteroid(x,y,r,sp)
 			    this.asteroids.push(asteroid)
 			}

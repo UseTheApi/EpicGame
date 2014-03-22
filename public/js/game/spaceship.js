@@ -1,7 +1,11 @@
 define([
 	'classy',
+	'game/util/utilites',
+	'game/spaceGarbage'
 ], function(
-	Class
+	Class,
+	Util,
+	AsteroidContainer
 ){
 	var SpaceShip = Class.$extend({
 		__init__ : function(x,y,src,cnvs) {
@@ -13,6 +17,9 @@ define([
 			this.y = y;
 			this.sWidth = 125; // spaceship width
 			this.sHeight = 53; // spaceship height
+			this.collisionRadius = this.sHeight/2 * 0.8;
+			this.collisionShiftX = this.sWidth * 0.75;
+			this.collisionShiftY = this.sHeight/2;
 			this.dy = 2; 
 			this.dx = 2;
 			this.gravity = 0.01;
@@ -22,6 +29,7 @@ define([
 			this.image = new Image();
 			this.image.src = src;
 			this.bullets = []; // TODO ship can shoot bullets
+			//this.Util = new Util(canvas)
 			this.image.onload = function () { 
 				ship.imgLoaded = true;
 			}
@@ -55,6 +63,24 @@ define([
 		},
 
 		collisionCheck: function(game) {
+			for (i in game.AsteroidContainer.asteroids)
+			{
+				//debugger
+				if(game.Util.intersectCircles(
+					this.x + this.collisionShiftX, 
+					this.y + this.collisionShiftY, 
+					this.collisionRadius,
+					game.AsteroidContainer.asteroids[i].x, 
+					game.AsteroidContainer.asteroids[i].y, 
+					game.AsteroidContainer.asteroids[i].radius) == true)
+				{
+					game.trigger("SpaceShipCrash");
+					break;
+				}
+				else {
+				}
+				
+			}
 			if(this.y > this.cnvs.width-178-22 || this.y < -10) {
 			 game.trigger("SpaceShipCrash");
 			}
@@ -64,6 +90,10 @@ define([
 
 		draw : function(ctx) {
 			if(this.imgLoaded == true) ctx.drawImage(this.image, this.x, this.y, this.sWidth, this.sHeight);
+			/*ctx.beginPath();
+      		ctx.arc(this.x + this.collisionShiftX, this.y + this.collisionShiftY, this.collisionRadius, 0, 2 * Math.PI, false);
+      		ctx.fillStyle = 'green';
+      		ctx.fill();*/
 		}
 	})
 	return SpaceShip;

@@ -40,7 +40,7 @@ define([
 		draw : function(ctx) {
 
 			for(i = 0; i < this.stars.length; i++) {
-			        this.stars[i].x -= (this.speed || 3);
+			        this.stars[i].x -= this.speed
 			        if(this.stars[i].x <= 0 ) {
 			            this.stars.splice(i, 1);
 			            this.createStars(1,this.cnvs.width);
