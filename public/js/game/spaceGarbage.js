@@ -44,10 +44,10 @@ define([
 
 		createAsteroids : function(amount, ctx, _pos) {
 			for (i = 0; i < amount; i++) {
-			    var x = _pos || Math.floor(Math.random() * this.cnvs.width*0.3) + this.cnvs.width*0.7
+			    var x = _pos || Math.floor(Math.random() * this.cnvs.width*0.3) + this.cnvs.width
 			    var y = Math.floor(Math.random() * this.cnvs.height)
 			    var r = Math.floor(Math.random() * 26 + 25)
-			    var sp = Math.floor(Math.random() * 2 + 1)
+			    var sp = Math.floor(Math.random() * 5 + 2)
 			    var asteroid = new Asteroid(x,y,r,sp, 'imgs/asteroid.png')
 			    asteroid.sWidth = asteroid.sHeight = r * 2;
 			    this.asteroids.push(asteroid)

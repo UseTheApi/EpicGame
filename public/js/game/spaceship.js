@@ -34,6 +34,8 @@ define([
 			this.imgLoaded = false;
 			this.image = new Image();
 			this.image.src = src;
+			this.im = new Image();
+			this.im.src = 'imgs/fail_rocket.png'
 			this.explosion = 0;
 			this.fail = false;
 			this.bullets = []; // TODO ship can shoot bullets
@@ -81,7 +83,7 @@ define([
 			this.vx *= 0.98;
 			}
 			else {
-				game.fps = 6;
+				//game.fps = 6;
 				this.vy += this.gravity;
 				this.y += this.vy;
 			}
@@ -110,16 +112,18 @@ define([
 		draw : function(ctx) {
 			if(this.imgLoaded == true) 
 				if(this.fail) {
-					this.image.src = 'imgs/fail_rocket.png'
-					ctx.drawImage(this.image, this.x + this.sWidth/2, this.y, this.sHeight, this.sWidth);
-					if(this.explosion!=0) {
-                		this.explosion.draw();
-                    }
+					
+					//debugger
+					ctx.drawImage(this.im, this.x + this.sWidth/2, this.y, this.sHeight, this.sWidth)
+					
 				}
 				else {
    				 ctx.drawImage(this.image, this.x, this.y,
 				 this.sWidth, this.sHeight);
    				}
+   				if(this.explosion!=0) {
+                		this.explosion.draw();
+                    }
 		}
 	})
 	return SpaceShip;
