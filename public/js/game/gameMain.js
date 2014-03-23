@@ -7,10 +7,9 @@ define([
     'game/spaceship',
     'game/starsky',
     'game/spaceGarbage',
+    'game/collisionDetector',
     'views/gameover'
-    
 ], function(
-    
     Backbone,
     Class,
     ExplosionClass,
@@ -18,13 +17,13 @@ define([
     SpaceShip,
     StarSky,
     AsteroidContainer,
+    CollisionDetector,
     GOView
-    
 ){
 
     var Game = Class.$extend({
 
-        __init__ : function(canvas) {
+        __init__: function(canvas) {
             _.extend(this, Backbone.Events);
           
             this.fps = 10;
@@ -36,13 +35,13 @@ define([
             this.ctx = this.cnvs.getContext("2d");
             this.ctx.fillRect(0, 0, this.cnvs.width, this.cnvs.height);
             this.score = 0;
-            this.explosion = 0;
             this.Util = new Util(canvas);
             this.Util.greeting(this.ctx);
-            this.SpaceShip = new SpaceShip(0, this.cnvs.height / 2, 'imgs/rocket.png',canvas); // need resource handler
+            this.SpaceShip = new SpaceShip(0, this.cnvs.height / 2, 'imgs/rocket.png',canvas, this.ctx); // need resource handler
             this.StarSky = new StarSky(this.cnvs, this.StarsAmount);
             this.AsteroidContainer = new AsteroidContainer(this.cnvs, this.AsteroidAmount);
             this.gameoverView = new GOView();
+            this.coldet = new CollisionDetector();
             this.on("SpaceShipCrash", function() {
                 this.Stop(true);
             });
@@ -70,7 +69,7 @@ define([
             });
         },
 
-        Stop : function(gameover) {
+        Stop: function(gameover) {
                 if(this.running) {
                   if(gameover) {
                     this.Util.clear(this.ctx);
@@ -80,31 +79,33 @@ define([
                   this.StarSky.deleteStars();
                   this.AsteroidContainer.deleteAsteroids();
                   clearInterval(this.interval);
+                  this.clearcanvas(this.ctx); 
                   this.running = false;
                 }
         },
 
-        clearcanvas : function(ctx) {
+        clearcanvas: function(ctx) {
             ctx.fillStyle = "black";
             ctx.fillRect(0, 0, this.cnvs.width, this.cnvs.height);
         },
 
+        findCollision: function() {
+           // debugger
+            this.coldet.ObjectCollisionWithObjectArray(this.SpaceShip, this.AsteroidContainer.asteroids);
+        },
 
-        render : function() {
+        render: function() {
+           // this.clearcanvas(this.ctx);
+            this.StarSky.update();
+            this.AsteroidContainer.update();
+            this.SpaceShip.update(this);
+            this.findCollision();
             this.clearcanvas(this.ctx);
             this.StarSky.draw(this.ctx)
             this.AsteroidContainer.draw(this.ctx);
             this.SpaceShip.draw(this.ctx);
-            
-            if(this.explosion!=0)
-            {
-                //debugger
-                this.explosion.update();
-                this.explosion.draw();
 
-            }
-            this.Util.drawscore(this.ctx,this.score);
-            this.SpaceShip.update(this); // update pos of ship and etc..
+            //this.Util.drawscore(this.ctx,this.score);
         }
 
     });

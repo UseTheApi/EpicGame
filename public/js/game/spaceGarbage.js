@@ -1,7 +1,9 @@
 define([
     'classy',
+    'game/collisionCore'
 ], function(
-    Class
+    Class,
+    Core
 ){
 
 
@@ -10,6 +12,13 @@ define([
 	      this.y = y;
 	      this.radius = r;
 	      this.speed = sp;
+	      this.core = new Core()
+	      this.getCore = function() {
+			return this.core
+		},
+			this.collisionReact = function() {
+				this.core.kill()
+			}
 	  }
 
 	var AsteroidContainer = Class.$extend({
@@ -19,6 +28,10 @@ define([
 			this.amount = amount
 			this.createAsteroids(this.amount)
 		},
+
+		
+		
+		
 
 		createAsteroids : function(amount, _pos) {
 			for (i = 0; i < amount; i++) {
@@ -38,16 +51,22 @@ define([
 			}
 		},
 
-		draw : function(ctx) {
-
+		update: function() {
 			for(i = 0; i < this.asteroids.length; i++) {
 			        this.asteroids[i].x -= this.asteroids[i].speed
+			        if(this.asteroids[i].core.isValid()) {
+			        	this.asteroids[i].core.update(this.asteroids[i].x,
+			            this.asteroids[i].y, this.asteroids[i].radius)
+			        }
 			        if(this.asteroids[i].x <= 0 ) {
 			            this.asteroids.splice(i, 1)
 			            this.createAsteroids(1,this.cnvs.width)
 			    }   
 			}
 
+		},
+
+		draw : function(ctx) {
 			for(i = 0; i < this.asteroids.length; i++) {
 			    ctx.fillStyle = "red"
 			    ctx.beginPath()

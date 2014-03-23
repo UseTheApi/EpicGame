@@ -13,8 +13,8 @@ Math.randomFloat = function(min, max){
 };
 
 var ExplosionClass = Class.$extend({
-	__init__: function(canvas, x, y, colors ) {
-		this.fHz = 1000/60 // The update frequency
+	__init__: function(canvas, x, y, colors) {
+		 // The update frequency
 		this.particles = [] // List of particles in the explosion
 		this.ctx = canvas// the canvas context to which the explosion will be drawn
 		this._killed=false
@@ -28,12 +28,12 @@ var ExplosionClass = Class.$extend({
 	// the coordinates x and y.
 	createExplosion: function(x, y, color) {
 		// Number of particles to use
-		var numParticles = 12;
+		var numParticles = 50;
 		
 		// Particle size parameters
 		// Controls the size of the particle.
-		var minSize = 5;
-		var maxSize = 20;
+		var minSize = 10;
+		var maxSize = 30;
 		
 		// Particle speed parameters
 		// Controls how quickly the particle
@@ -88,14 +88,14 @@ var ExplosionClass = Class.$extend({
 	},
 	
 	// Update all particles
-	update: function() {
+	update: function(fps) {
 		if ( this.particles.length <= 0) {
 			this.kill();
 			return;	
 		}
 		
 		for ( var i = 0; i < this.particles.length; i++) {
-			this.particles[i].update();
+			this.particles[i].update(fps);
 		}
 	},
 	
@@ -134,8 +134,8 @@ var ParticleClass = Class.$extend({
 	this.parent = parent // The parent object controlling the explosion
 	},
 	// Update the size and position of the particle
-	update: function() {
-		var ms = this.parent.fHz;
+	update: function(fps) {
+		var ms = fps;
 		
 		// Shrink the particle based on the scaleSpeed value
 		this.scale -= this.scaleSpeed * ms / 1000.0;

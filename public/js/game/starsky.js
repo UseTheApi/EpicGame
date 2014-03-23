@@ -37,8 +37,7 @@ define([
 			}
 		},
 
-		draw : function(ctx) {
-
+		update: function() {
 			for(i = 0; i < this.stars.length; i++) {
 			        this.stars[i].x -= this.speed
 			        if(this.stars[i].x <= 0 ) {
@@ -46,7 +45,9 @@ define([
 			            this.createStars(1,this.cnvs.width);
 			    }   
 			}
+		},
 
+		draw : function(ctx) {
 			for(i = 0; i < this.stars.length; i++) {
 			    ctx.fillStyle = "white";
 			    ctx.beginPath();
