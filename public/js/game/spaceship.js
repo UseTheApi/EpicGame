@@ -1,11 +1,13 @@
 define([
 	'classy',
 	'game/util/utilites',
-	'game/spaceGarbage'
+	'game/spaceGarbage',
+	'game/explosion'
 ], function(
 	Class,
 	Util,
-	AsteroidContainer
+	AsteroidContainer,
+	ExplosionClass
 ){
 	var SpaceShip = Class.$extend({
 		__init__ : function(x,y,src,cnvs) {
@@ -30,6 +32,7 @@ define([
 			this.image.src = src;
 			this.bullets = []; // TODO ship can shoot bullets
 			//this.Util = new Util(canvas)
+			this.explosionColors = ['#696359', '#F02E2E', '#FFAF2E'];
 			this.image.onload = function () { 
 				ship.imgLoaded = true;
 			}
@@ -74,7 +77,9 @@ define([
 					game.AsteroidContainer.asteroids[i].y, 
 					game.AsteroidContainer.asteroids[i].radius) == true)
 				{
-					game.trigger("SpaceShipCrash");
+							
+					game.explosion = new ExplosionClass(game.ctx, this.x, this.y, this.explosionColors)
+					//game.trigger("SpaceShipCrash");
 					break;
 				}
 				else {
