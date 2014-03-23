@@ -37,6 +37,7 @@ define([
             this.score = 0;
             this.Util = new Util(canvas);
             this.Util.greeting(this.ctx);
+          //  debugger
             this.SpaceShip = new SpaceShip(0, this.cnvs.height / 2, 'imgs/rocket.png',canvas, this.ctx); // need resource handler
             this.StarSky = new StarSky(this.cnvs, this.StarsAmount);
             this.AsteroidContainer = new AsteroidContainer(this.cnvs, this.AsteroidAmount);
@@ -54,7 +55,7 @@ define([
 
                 game.StarSky.createStars(this.StarsAmount);
 
-                game.AsteroidContainer.createAsteroids(this.AsteroidAmount);
+                game.AsteroidContainer.createAsteroids(this.AsteroidAmount, this.ctx);
                 
                 game.interval = setInterval(function() { game.score +=1; game.render(); }, 1000/this.fps);
                 $(window).unbind("keypress");

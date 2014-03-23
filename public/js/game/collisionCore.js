@@ -5,12 +5,16 @@ define([
 	Class,
 	Util
 ){
+	/*
+	* Core of collision.
+	* help to detect collision of circles
+	*/
 	var Core = Class.$extend({
 		__init__: function(){
 			this.x
 			this.y
 			this.radius
-			this.life = true;
+			this.life = true; //flag for destroing the core to draw one explosion
 		},
 
 		isValid: function() {

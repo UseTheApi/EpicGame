@@ -5,7 +5,6 @@ define([
 ){
 /*
  * Explosion Class
- * A class to create explosions on the HTML5 canvas.
  */
 
 Math.randomFloat = function(min, max){
@@ -16,7 +15,7 @@ var ExplosionClass = Class.$extend({
 	__init__: function(canvas, x, y, colors) {
 		 // The update frequency
 		this.particles = [] // List of particles in the explosion
-		this.ctx = canvas// the canvas context to which the explosion will be drawn
+		this.ctx = canvas
 		this._killed=false
 
 		for (i = 0; i < colors.length; i++ ) {
@@ -24,46 +23,37 @@ var ExplosionClass = Class.$extend({
 		}
 	},
 	
-	// Create an explosion for a particular color at the
-	// the coordinates x and y.
 	createExplosion: function(x, y, color) {
-		// Number of particles to use
+
 		var numParticles = 50;
 		
 		// Particle size parameters
-		// Controls the size of the particle.
-		var minSize = 10;
+		var minSize = 5;
 		var maxSize = 30;
 		
 		// Particle speed parameters
 		// Controls how quickly the particle
 		// speeds outwards from the blast center.
-		var minSpeed = 60.0;
-		var maxSpeed = 400.0;
+		var minSpeed = 100.0;
+		var maxSpeed = 800.0;
 		
 		// Scaling speed parameters
 		// Controls how quickly the particle shrinks.
-		var minScaleSpeed = 1.0;
-		var maxScaleSpeed = 4.0;
+		var minScaleSpeed = 0.3;
+		var maxScaleSpeed = 1.0;
 
 		// Uniformly distribute the particles in a circle
 		for ( var angle=0; angle<360; angle += Math.round(360/numParticles) ) {
-			
-			// Create a new particle
+
 			var particle = new ParticleClass(this);
-			
-			// Assign the parent for callback purposes
-			//particle.parent = this;
-			
-			// Set the position of the particle
+
 			particle.pos.x = x;
 			particle.pos.y = y;
 			
 			// Set the particle size as a random value
 			// between minSize and maxSize
 			particle.radius = Math.randomFloat(minSize, maxSize);
-			
-			// Set the particle's color
+
 			particle.color = color;
 
 			// Set the scale speed. This is a random value
@@ -75,19 +65,14 @@ var ExplosionClass = Class.$extend({
 			// Set the velocity of the particle
 			particle.velocity.x = speed * Math.cos(angle * Math.PI / 180.0);
 			particle.velocity.y = speed * Math.sin(angle * Math.PI / 180.0);
-
-			// Add the particle to the list of particles in the explosion
 			this.particles.push(particle);
 		}
 	},
-	
-	// Remove a particle from the list of particles in the explosion.
-	// The function is called by the particle's kill function.
+
 	removeParticle: function(particle) {
 		this.particles.slice(particle);
 	},
 	
-	// Update all particles
 	update: function(fps) {
 		if ( this.particles.length <= 0) {
 			this.kill();
@@ -99,14 +84,12 @@ var ExplosionClass = Class.$extend({
 		}
 	},
 	
-	// Draw all particles
 	draw: function() {
 		for ( var i = 0; i < this.particles.length; i++) {
 			this.particles[i].draw();
 		}
 	},
 	
-	// Destroy this explosion instance
 	kill: function() {
 		this._killed = true;
 	}
@@ -120,11 +103,11 @@ var ExplosionClass = Class.$extend({
 var ParticleClass = Class.$extend({
 
 	__init__ : function(parent){
-	this.pos={x: 0, y: 0} // The coordinates of the particle.
+	this.pos={x: 0, y: 0}
 	
-	this.radius=20 // The radius of the particle.
+	this.radius=20
 	
-	this.color="#000000" // RGB color value of particle (hexadecimal notation).
+	this.color="#000000"
 	
 	this.scale=1.0  // Scaling value between 0.0 and 1.0, initialized to 1.0.
 	this.scaleSpeed=0.5 // Amount per second to be deduced from the scale property.
@@ -133,7 +116,7 @@ var ParticleClass = Class.$extend({
 	
 	this.parent = parent // The parent object controlling the explosion
 	},
-	// Update the size and position of the particle
+
 	update: function(fps) {
 		var ms = fps;
 		
@@ -151,29 +134,19 @@ var ParticleClass = Class.$extend({
 		this.pos.y += this.velocity.y * ms/1000.0;
 	},
 
-	// Draws the particle on the canvas
 	draw: function() {
-		//var ctx = this.parent.ctx;
 		var ctx = this.parent.ctx;
-		
-		// translating the 2D context to the particle coordinates
-	//	ctx.translate(this.pos.x, this.pos.y);
-	//	ctx.scale(this.scale, this.scale);
 
-		// drawing a filled circle in the particle's local space
 		ctx.beginPath();
 		ctx.arc(this.pos.x, this.pos.y, this.radius*this.scale, 0, Math.PI*2, true);
 		ctx.closePath();
-
 		ctx.fillStyle = this.color;
 		ctx.fill();
-
 		ctx.restore();
 	},
-	
-	// Destroy the particle
+
 	kill: function(){
-		//this.parent.removeParticle(this);
+		this.parent.removeParticle(this);
 	}
 })
 return ExplosionClass;

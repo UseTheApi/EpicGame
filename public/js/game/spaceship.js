@@ -38,7 +38,7 @@ define([
 			this.fail = false;
 			this.bullets = []; // TODO ship can shoot bullets
 			//this.Util = new Util(canvas)
-			this.explosionColors = ['#F5071F', '#4A2103', '#F50A25', '#C107F0', '#B5B4AC', '#AD5003'];
+			this.explosionColors = ['#FF0533', '#EB0CA8', '#870515', '#CC5027', '#853707'];
 			this.image.onload = function () { 
 				ship.imgLoaded = true;
 			}
@@ -49,7 +49,10 @@ define([
 		},
 
 		collisionReact: function() {
-				this.explosion = new ExplosionClass(this.ctx, this.x + this.collisionShiftX, this.y + this.collisionShiftY, this.explosionColors)
+				this.explosion = new ExplosionClass(this.ctx, 
+					this.x + this.collisionShiftX, 
+					this.y + this.collisionShiftY, 
+					this.explosionColors)
 				this.fail = true;
 				this.core.kill();
 		},
@@ -77,9 +80,8 @@ define([
 			this.vy *= 0.98; // friction 
 			this.vx *= 0.98;
 			}
-			else
-			{
-
+			else {
+				game.fps = 6;
 				this.vy += this.gravity;
 				this.y += this.vy;
 			}
@@ -88,8 +90,7 @@ define([
 					this.y + this.collisionShiftY, 
 					this.collisionRadius);
 			}
-			if(this.explosion != 0)
-			{
+			if(this.explosion != 0) {
 				this.explosion.update(game.fps);
 			}
 
@@ -108,19 +109,17 @@ define([
 
 		draw : function(ctx) {
 			if(this.imgLoaded == true) 
-				ctx.drawImage(this.image, this.x, this.y,
+				if(this.fail) {
+					this.image.src = 'imgs/fail_rocket.png'
+					ctx.drawImage(this.image, this.x + this.sWidth/2, this.y, this.sHeight, this.sWidth);
+					if(this.explosion!=0) {
+                		this.explosion.draw();
+                    }
+				}
+				else {
+   				 ctx.drawImage(this.image, this.x, this.y,
 				 this.sWidth, this.sHeight);
-
-			if(this.explosion!=0)
-            {
-                //debugger
-                
-                this.explosion.draw();
-            }
-			/*ctx.beginPath();
-      		ctx.arc(this.x + this.collisionShiftX, this.y + this.collisionShiftY, this.collisionRadius, 0, 2 * Math.PI, false);
-      		ctx.fillStyle = 'green';
-      		ctx.fill();*/
+   				}
 		}
 	})
 	return SpaceShip;

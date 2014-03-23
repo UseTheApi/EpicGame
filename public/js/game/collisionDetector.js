@@ -35,7 +35,7 @@ define([
 			}
 		},
 
-		ObjectArrayCollisionWithObjectArray:function(obj_arr1, obj_arr2)
+		ObjectArrayCollisionWithObjectArray:function(obj_arr1, obj_arr2) //option for bullets collision detection
 		{
 			for(i in obj_arr1)
 			{
