@@ -5,10 +5,11 @@ define([
 ){
 
 
-	function Star(x,y,r) {
+	function Star(x,y,r, sp) {
 	      this.x = x;
 	      this.y = y;
 	      this.radius = r;
+	      this.speed = sp
 	  }
 
 	var StarSky = Class.$extend({
@@ -25,7 +26,7 @@ define([
 			    var x = _pos || Math.floor(Math.random() * this.cnvs.width)
 			    var y = Math.floor(Math.random() * this.cnvs.height)
 			    var r = Math.floor(Math.random() * 5 + 1)
-			    var star = new Star(x,y,r);
+			    var star = new Star(x,y,r, this.speed);
 			    this.stars.push(star);
 			}
 		},
@@ -39,7 +40,7 @@ define([
 
 		update: function() {
 			for(i = 0; i < this.stars.length; i++) {
-			        this.stars[i].x -= this.speed
+			        this.stars[i].x -= this.stars[i].speed
 			        if(this.stars[i].x <= 0 ) {
 			            this.stars.splice(i, 1);
 			            this.createStars(1,this.cnvs.width);

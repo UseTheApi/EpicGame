@@ -12,30 +12,33 @@ Math.randomFloat = function(min, max){
 };
 
 var ExplosionClass = Class.$extend({
-	__init__: function(canvas, x, y, colors) {
+	__init__: function(x, y, colors,numPart, maxSz, maxSp) {
 		 // The update frequency
 		this.particles = [] // List of particles in the explosion
-		this.ctx = canvas
+		//this.ctx = canvas
 		this._killed=false
+		this.numPart = numPart
+		this.maxSz = maxSz
+		this.maxSp = maxSp
 
 		for (i = 0; i < colors.length; i++ ) {
-			this.createExplosion(x, y, colors[i]);
+			this.createExplosion(x, y, colors[i], this.numPart, this.maxSz, this.maxSp);
 		}
 	},
 	
-	createExplosion: function(x, y, color) {
+	createExplosion: function(x, y, color, numPart, maxSz, maxSp) {
 
-		var numParticles = 50;
+		var numParticles = numPart;
 		
 		// Particle size parameters
-		var minSize = 5;
-		var maxSize = 30;
+		var minSize = 1;
+		var maxSize = maxSz;
 		
 		// Particle speed parameters
 		// Controls how quickly the particle
 		// speeds outwards from the blast center.
 		var minSpeed = 100.0;
-		var maxSpeed = 800.0;
+		var maxSpeed = maxSp;
 		
 		// Scaling speed parameters
 		// Controls how quickly the particle shrinks.
@@ -84,9 +87,9 @@ var ExplosionClass = Class.$extend({
 		}
 	},
 	
-	draw: function() {
+	draw: function(ctx) {
 		for ( var i = 0; i < this.particles.length; i++) {
-			this.particles[i].draw();
+			this.particles[i].draw(ctx);
 		}
 	},
 	
@@ -118,10 +121,9 @@ var ParticleClass = Class.$extend({
 	},
 
 	update: function(fps) {
-		var ms = fps;
 		
 		// Shrink the particle based on the scaleSpeed value
-		this.scale -= this.scaleSpeed * ms / 1000.0;
+		this.scale -= this.scaleSpeed * fps / 1000.0;
 
 		if (this.scale <= 0)
 		{
@@ -130,12 +132,12 @@ var ParticleClass = Class.$extend({
 			return;
 		}
 		// moving away from explosion center
-		this.pos.x += this.velocity.x * ms/1000.0;
-		this.pos.y += this.velocity.y * ms/1000.0;
+		this.pos.x += this.velocity.x * fps/1000.0;
+		this.pos.y += this.velocity.y * fps/1000.0;
 	},
 
-	draw: function() {
-		var ctx = this.parent.ctx;
+	draw: function(ctx) {
+		//var ctx = this.parent.ctx;
 
 		ctx.beginPath();
 		ctx.arc(this.pos.x, this.pos.y, this.radius*this.scale, 0, Math.PI*2, true);

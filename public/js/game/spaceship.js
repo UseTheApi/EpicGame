@@ -3,16 +3,21 @@ define([
 	'game/util/utilites',
 	'game/spaceGarbage',
 	'game/explosion',
-	'game/collisionCore'
+	'game/collisionCore',
+	'game/attackLogic',
+	'game/explosionManager'
 ], function(
 	Class,
 	Util,
 	AsteroidContainer,
 	ExplosionClass,
-	Core
+	Core,
+	BulletContainer,
+	ExplosionManager
 ){
 	var SpaceShip = Class.$extend({
 		__init__ : function(x,y,src,cnvs, ctx) {
+			this.name = 'SpaceShip'
 			var ship = this;
 			var game = game;
 			this.direction = '';
@@ -36,27 +41,34 @@ define([
 			this.image.src = src;
 			this.im = new Image();
 			this.im.src = 'imgs/fail_rocket.png'
-			this.explosion = 0;
 			this.fail = false;
-			this.bullets = []; // TODO ship can shoot bullets
-			//this.Util = new Util(canvas)
+			//this.explosionManager = new ExplosionManager()
+			this.bulletContainer = new BulletContainer(this.cnvs,this.ctx)
 			this.explosionColors = ['#FF0533', '#EB0CA8', '#870515', '#CC5027', '#853707'];
 			this.image.onload = function () { 
 				ship.imgLoaded = true;
 			}
 		},
 
+		getName: function() {
+			return this.name
+		},
+
 		getCore: function() {
 			return this.core;
 		},
 
-		collisionReact: function() {
-				this.explosion = new ExplosionClass(this.ctx, 
-					this.x + this.collisionShiftX, 
+		collisionReact: function(obj) {
+			var objName = obj.getName()
+			if((objName == 'Asteroid') || (objName == 'Enemy')) {
+				var explosion = new ExplosionClass(this.x + this.collisionShiftX, 
 					this.y + this.collisionShiftY, 
-					this.explosionColors)
+					this.explosionColors,
+					55, 30, 800)
+				ExplosionManager().$class.addExplosion(explosion)
 				this.fail = true;
 				this.core.kill();
+			}
 		},
 
 		update : function(game) {
@@ -76,14 +88,20 @@ define([
 			if(game.keys[39]) { // forward
 				this.vx = this.dx; this.direction = ''; 
 			}
+			if(game.keys[32]) { //attack with bullet
+				//debugger
+				this.bulletContainer.createBullet(this.x + this.sWidth, this.y + this.sHeight/2, this.ctx)
+				game.keys[32] = false;
+			}
 			//this.vy += this.gravity; // need gravity or not?
 			this.y += this.vy;
 			this.x += this.vx;
 			this.vy *= 0.98; // friction 
 			this.vx *= 0.98;
+			this.bulletContainer.update();
 			}
 			else {
-				//game.fps = 6;
+				game.fps = 4;
 				this.vy += this.gravity;
 				this.y += this.vy;
 			}
@@ -92,9 +110,6 @@ define([
 					this.y + this.collisionShiftY, 
 					this.collisionRadius);
 			}
-			if(this.explosion != 0) {
-				this.explosion.update(game.fps);
-			}
 
 			if(this.out(game)) {
 				game.trigger("SpaceShipCrash");
@@ -102,7 +117,7 @@ define([
 		},
 
 		out: function(game) {
-			if(this.y > this.cnvs.width-178-22 || this.y < -10) {
+			if(this.y > this.cnvs.width-178-22 || this.y < -this.sHeight) {
 			 return true;
 			}
 			if(this.x>this.cnvs.width) this.x = -this.sWidth; 
@@ -110,20 +125,17 @@ define([
 		},
 
 		draw : function(ctx) {
-			if(this.imgLoaded == true) 
+			if(this.imgLoaded == true) {
 				if(this.fail) {
-					
-					//debugger
-					ctx.drawImage(this.im, this.x + this.sWidth/2, this.y, this.sHeight, this.sWidth)
-					
+					ctx.drawImage(this.im, this.x + this.sWidth/2, this.y, 
+						this.sHeight, this.sWidth)
 				}
 				else {
-   				 ctx.drawImage(this.image, this.x, this.y,
-				 this.sWidth, this.sHeight);
-   				}
-   				if(this.explosion!=0) {
-                		this.explosion.draw();
-                    }
+   				    ctx.drawImage(this.image, this.x, this.y,
+				    this.sWidth, this.sHeight);
+				    this.bulletContainer.draw(ctx)
+				}
+				}
 		}
 	})
 	return SpaceShip;

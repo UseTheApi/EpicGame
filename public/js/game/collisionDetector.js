@@ -21,8 +21,8 @@ define([
 			{
 				if(core1.coreIntersect(core2))
 				{
-					obj1.collisionReact()
-					obj2.collisionReact()
+					obj1.collisionReact(obj2)
+					obj2.collisionReact(obj1)
 				}
 			}
 		},
@@ -39,7 +39,7 @@ define([
 		{
 			for(i in obj_arr1)
 			{
-				ObjectCollisionWithObjectArray(obj_arr1[i], obj_arr2)
+				this.ObjectCollisionWithObjectArray(obj_arr1[i], obj_arr2)
 			}
 		}
 

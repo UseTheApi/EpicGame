@@ -8,6 +8,8 @@ define([
     'game/starsky',
     'game/spaceGarbage',
     'game/collisionDetector',
+    'game/enemies',
+    'game/explosionManager',
     'views/gameover'
 ], function(
     Backbone,
@@ -18,6 +20,8 @@ define([
     StarSky,
     AsteroidContainer,
     CollisionDetector,
+    EnemyContainer,
+    ExplosionManager,
     GOView
 ){
 
@@ -26,9 +30,8 @@ define([
         __init__: function(canvas) {
             _.extend(this, Backbone.Events);
           
-            this.fps = 10;
+            this.fps = 60;
             this.StarsAmount = 22;
-            this.AsteroidAmount = 5;
             this.running = false;
             this.cnvs = canvas;
             this.test = 'fafd';
@@ -37,10 +40,11 @@ define([
             this.score = 0;
             this.Util = new Util(canvas);
             this.Util.greeting(this.ctx);
-          //  debugger
             this.SpaceShip = new SpaceShip(0, this.cnvs.height / 2, 'imgs/rocket.png',canvas, this.ctx); // need resource handler
             this.StarSky = new StarSky(this.cnvs, this.StarsAmount);
-            this.AsteroidContainer = new AsteroidContainer(this.cnvs, this.AsteroidAmount);
+            this.AsteroidContainer = new AsteroidContainer(this.cnvs);
+            this.EnemyContainer = new EnemyContainer(this.cnvs);
+           // this.ExplosionManager = new ExplosionManager();
             this.gameoverView = new GOView();
             this.coldet = new CollisionDetector();
             this.on("SpaceShipCrash", function() {
@@ -55,9 +59,9 @@ define([
 
                 game.StarSky.createStars(this.StarsAmount);
 
-                game.AsteroidContainer.createAsteroids(this.AsteroidAmount, this.ctx);
+                game.AsteroidContainer.createAsteroids(this.AsteroidAmount);
                 
-                game.interval = setInterval(function() { game.score +=1; game.render(); }, 1000/this.fps);
+                game.interval = setInterval(function() { game.score +=0.01; game.render(); }, 1000/this.fps);
                 $(window).unbind("keypress");
 
                 document.body.addEventListener("keydown", function (e) {
@@ -93,20 +97,28 @@ define([
         findCollision: function() {
            // debugger
             this.coldet.ObjectCollisionWithObjectArray(this.SpaceShip, this.AsteroidContainer.asteroids);
+            this.coldet.ObjectCollisionWithObjectArray(this.SpaceShip, this.EnemyContainer.enemies);
+            this.coldet.ObjectArrayCollisionWithObjectArray(this.SpaceShip.bulletContainer.bullets,
+             this.EnemyContainer.enemies);
+            this.coldet.ObjectArrayCollisionWithObjectArray(this.SpaceShip.bulletContainer.bullets,
+             this.AsteroidContainer.asteroids);
         },
 
         render: function() {
            // this.clearcanvas(this.ctx);
             this.StarSky.update();
             this.AsteroidContainer.update();
+            this.EnemyContainer.update();
             this.SpaceShip.update(this);
+            ExplosionManager().$class.update(this.fps);
             this.findCollision();
             this.clearcanvas(this.ctx);
             this.StarSky.draw(this.ctx)
             this.AsteroidContainer.draw(this.ctx);
+            this.EnemyContainer.draw(this.ctx);
             this.SpaceShip.draw(this.ctx);
-
-            //this.Util.drawscore(this.ctx,this.score);
+            ExplosionManager().$class.draw(this.ctx);
+            this.Util.drawscore(this.ctx,this.score);
         }
 
     });

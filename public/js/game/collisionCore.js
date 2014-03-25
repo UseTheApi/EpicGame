@@ -30,9 +30,14 @@ define([
 		},
 
 		intersectCircles: function(x1,y1,r1,x2,y2,r2) {
-			var hypotenuse = this.sqr(x1 - x2) + this.sqr(y1 - y2)
-			var distance = this.sqr(r1 + r2);
-			return(hypotenuse <= distance)
+			if((Math.abs(x1-x2) < (r1+r2)) || (Math.abs(y1-y2) < (r1+r2))) {
+				var hypotenuse = this.sqr(x1 - x2) + this.sqr(y1 - y2)
+				var distance = this.sqr(r1 + r2);
+				return(hypotenuse <= distance)
+			}
+			else {
+				return false
+			}			
 		},
 
 		coreIntersect: function(core)
