@@ -61,7 +61,7 @@ define([
 
                 game.AsteroidContainer.createAsteroids(this.AsteroidAmount);
                 
-                game.interval = setInterval(function() { game.score +=0.01; game.render(); }, 1000/this.fps);
+                game.interval = setInterval(function() { game.score +=1; game.render(); }, 1000/this.fps);
                 $(window).unbind("keypress");
 
                 document.body.addEventListener("keydown", function (e) {
