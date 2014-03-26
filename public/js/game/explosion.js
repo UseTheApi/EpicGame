@@ -82,8 +82,10 @@ var ExplosionClass = Class.$extend({
 			return;	
 		}
 		
-		for ( var i = 0; i < this.particles.length; i++) {
+		for (var i = 0; i < this.particles.length; i++) {
 			this.particles[i].update(fps);
+			if(this.particles[i].isKilled())
+				this.particles.splice(i, 1)
 		}
 	},
 	
@@ -105,7 +107,7 @@ var ExplosionClass = Class.$extend({
  */
 var ParticleClass = Class.$extend({
 
-	__init__ : function(parent){
+	__init__ : function(){
 	this.pos={x: 0, y: 0}
 	
 	this.radius=20
@@ -116,8 +118,9 @@ var ParticleClass = Class.$extend({
 	this.scaleSpeed=0.5 // Amount per second to be deduced from the scale property.
 	
 	this.velocity={x: 0, y: 0} // Amount to be added per second to the particle’s position.
+
+	this._killed = false;
 	
-	this.parent = parent // The parent object controlling the explosion
 	},
 
 	update: function(fps) {
@@ -137,7 +140,6 @@ var ParticleClass = Class.$extend({
 	},
 
 	draw: function(ctx) {
-		//var ctx = this.parent.ctx;
 
 		ctx.beginPath();
 		ctx.arc(this.pos.x, this.pos.y, this.radius*this.scale, 0, Math.PI*2, true);
@@ -148,7 +150,11 @@ var ParticleClass = Class.$extend({
 	},
 
 	kill: function(){
-		this.parent.removeParticle(this);
+		this._killed = true;
+	},
+
+	isKilled: function(){
+		return this._killed;
 	}
 })
 return ExplosionClass;

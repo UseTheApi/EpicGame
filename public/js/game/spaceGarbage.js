@@ -44,7 +44,7 @@ define([
 			var astCont = this
 			this.cnvs = canvas
 			this.asteroids = []
-			this.asteroidProbability = 0.2
+			this.asteroidProbability = 0.55
 			astCont.interval = setInterval(function() {
 				var ps = Math.random()
 				if(ps < astCont.asteroidProbability) {
@@ -82,7 +82,6 @@ define([
 			        }
 			        if(this.asteroids[i].x <= -this.asteroids[i].radius ) {
 			            this.asteroids.splice(i, 1)
-			           // this.createAsteroids(1,this.cnvs.width)
 			    }   
 			}
 

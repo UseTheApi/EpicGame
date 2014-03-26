@@ -31,8 +31,8 @@ define([
 			this.collisionShiftX = this.sWidth * 0.75;
 			this.collisionShiftY = this.sHeight/2;
 			this.core = new Core()
-			this.dy = 2; 
-			this.dx = 2;
+			this.dy = 3; 
+			this.dx = 3;
 			this.gravity = 0.025;
 			this.vy = 0; // vertical speed
 			this.vx = 0; // horizontal speed
@@ -44,7 +44,7 @@ define([
 			this.fail = false;
 			//this.explosionManager = new ExplosionManager()
 			this.bulletContainer = new BulletContainer(this.cnvs,this.ctx)
-			this.explosionColors = ['#FF0533', '#EB0CA8', '#870515', '#CC5027', '#853707'];
+			this.explosionColors = ['#FF0533', '#EB0CA8', '#870515', '#CC5027', '#853707', '#FF6600'];
 			this.image.onload = function () { 
 				ship.imgLoaded = true;
 			}

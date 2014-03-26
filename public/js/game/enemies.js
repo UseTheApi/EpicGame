@@ -80,7 +80,6 @@ define([
 					if(this.enemies[i].y >= this.cnvs.height)
 					{
 						this.enemies.splice(i, 1)
-						console.log("enemy killed")
 					}
 				}
 				else {

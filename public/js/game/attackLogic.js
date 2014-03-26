@@ -18,8 +18,7 @@ define([
 		this.ctx = ctx
 		this.core = new Core()
 		this.life = true
-		//this.explosion = 0;
-		this.explosionColors = ('#FF0533', '#EB0CA8', '#870515', '#CC5027', '#853707')
+		this.explosionColors = ('#FF0533', '#EB0CA8')
 		this.getCore = function(){
 			return this.core
 		},
@@ -28,7 +27,6 @@ define([
 			return this.name
 		}
 		this.collisionReact = function(obj){
-			console.log("bullet collisionReact")
 			var objName = obj.getName()
 			if((objName == 'Enemy') || (objName == 'Asteroid')) {
 				var explosion = new ExplosionClass( 
@@ -71,7 +69,6 @@ define([
 				this.bullets[i].x += this.bullets[i].speed
 				if((this.bullets[i].x >= this.cnvs.width) || !this.bullets[i].life)
 				{
-					console.log("bullet deletes")
 					this.deleteBullet(i)
 					continue
 				}

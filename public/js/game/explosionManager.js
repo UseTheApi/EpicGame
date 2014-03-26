@@ -21,11 +21,11 @@ var ExplosionManager = Class.$extend({
 
 		update: function(fps)
 		{
-			for(i in ExplosionManager.explosions)
+			for(var i = 0; i < ExplosionManager.explosions.length; ++i)
 			{
 				ExplosionManager.explosions[i].update(fps)
 				if(ExplosionManager.explosions[i]._killed){
-					delete ExplosionManager.explosions[i]
+					ExplosionManager.explosions.splice(i, 1)
 				}
 			}
 		},
