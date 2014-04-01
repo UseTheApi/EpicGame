@@ -1,7 +1,7 @@
 define([
     'models/score', 
     'collections/scores', 
-    'views/scoreboard', 
+    'views/scoreboard'
 ], function(
     Score, 
     Scoreboard, 
@@ -13,7 +13,7 @@ define([
         var PlayerName = dataArr[0]["value"];
         var PlayerScore = dataArr[1]["value"];
         var scores = [];
-        
+
         if(localStorage["scores"] != undefined) {
             scores =  JSON.parse(localStorage["scores"]);
         }

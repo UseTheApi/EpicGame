@@ -1,5 +1,4 @@
 define([
-
     'backbone',
     'classy',
     'game/explosion',
@@ -68,8 +67,7 @@ define([
             this.Util.greeting(this.ctx);
             this.SpaceShip = new SpaceShip(0, this.cnvs.height / 2, 'imgs/rocket.png',canvas, this.ctx); // need resource handler
             this.StarSky = new StarSky(this.cnvs, this.StarsAmount);
-            this.AsteroidContainer = new AsteroidContainer(this.cnvs);
-            this.EnemyContainer = new EnemyContainer(this.cnvs);
+        
            // this.ExplosionManager = new ExplosionManager();
             this.gameoverView = new GOView();
             this.coldet = new CollisionDetector();
@@ -86,6 +84,10 @@ define([
             });
 
             $(window).bind("keypress", function() { 
+
+                game.AsteroidContainer = new AsteroidContainer(game.cnvs);
+
+                game.EnemyContainer = new EnemyContainer(game.cnvs);
 
                 game.StarSky.createStars(this.StarsAmount);
 

@@ -24,7 +24,7 @@ module.exports = {
 			res.setHeader('Content-Length', Buffer.byteLength(s));
 			res.end(s);
 
-		},500) // just to test loading img :)
+		},400) // just to test loading img :)
 	
 	},
 
