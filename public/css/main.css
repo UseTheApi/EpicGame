@@ -30,7 +30,7 @@ h3 {
 .game__menu-element{
 	position: relative;
 	width: 50px;
-	margin-left: 10px;
+	margin: 10px, 10px, 10px, 10px;
 	color: black;
 	font-color:black;
 	text-align: center;
