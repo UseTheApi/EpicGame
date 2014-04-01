@@ -6,30 +6,25 @@ define([
     Core
 ){
 	function Enemy(x,y,r,sp) {
-		  var Enemy = this
-		  this.name = 'Enemy'
-	      this.x = x;
-	      this.y = y;
-	      this.radius = r;
-	      this.speed = sp;
-	      this.core = new Core() // collision core	      
-	      this.sWidth = 170;  //standart mesurements of image
-		  this.sHeight = 170;
-		  this.imgLoaded = false;
-		  this.lineOfLife = 30;
-		  this.bulletDamage = 10;
-		  this.image = new Image();  
-		  this.image.src = 'imgs/enemy.png';
-	      this.image.onload = function () { 
-				Enemy.imgLoaded = true;
-			},
-			this.getCore = function() {
-			return this.core
-		},
+			this.name = 'Enemy'
+			this.x = x;
+			this.y = y;
+			this.radius = r;
+			this.speed = sp;
+			this.core = new Core() // collision core	      
+			this.sWidth = 170;  //standart mesurements of image
+			this.sHeight = 170;
+			this.imgLoaded = false;
+			this.lineOfLife = 30;
+			this.bulletDamage = 10;
 
 			this.getName = function() {
 				return this.name
 			},
+
+			this.getCore = function() {
+			return this.core
+		},
 
 			this.collisionReact = function(obj) {
 				var objName = obj.getName()
@@ -49,6 +44,12 @@ define([
 			this.cnvs = canvas
 			this.enemies = []
 			this.enemyProbability = 0.08
+			this.image = new Image();  
+			this.image.src = 'imgs/enemy.png';
+			this.image.onload = function () { 
+				enCont.imgLoaded = true;
+			},
+			
 			enCont.interval = setInterval(function() {
 				var ps = Math.random()
 				if(ps < enCont.enemyProbability) {
@@ -99,11 +100,9 @@ define([
 
 		draw : function(ctx) {
 
-			for(i = 0; i < this.enemies.length; i++) {
-
-				if(this.enemies[i].imgLoaded) {
-
-					ctx.drawImage(this.enemies[i].image, 
+			if(this.imgLoaded) {
+				for(i = 0; i < this.enemies.length; i++) {
+					ctx.drawImage(this.image, 
 						this.enemies[i].x - this.enemies[i].radius,  // find center of collision core
 						this.enemies[i].y - this.enemies[i].radius, 
 						this.enemies[i].sWidth, 

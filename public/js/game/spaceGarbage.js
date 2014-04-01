@@ -9,21 +9,15 @@ define([
 
 	function Asteroid(x,y,r,sp) {
 		var asteroid = this
-	      this.x = x;
-	      this.name = 'Asteroid'
-	      this.y = y;
-	      this.radius = r;
-	      this.speed = sp;
-	      this.core = new Core() // collision core	      
-	      this.sWidth = 160;  //standart mesurements of image
-		  this.sHeight = 160;
-		  this.imgLoaded = false;
-		  this.image = new Image();  
-		  this.image.src = 'imgs/asteroid.png';
-	      this.image.onload = function () { 
-				asteroid.imgLoaded = true;
-			},
-			this.getCore = function() {
+		this.x = x;
+		this.name = 'Asteroid'
+		this.y = y;
+		this.radius = r;
+		this.speed = sp;
+		this.core = new Core() // collision core	      
+		this.sWidth = 160;  //standart mesurements of image
+		this.sHeight = 160;
+		this.getCore = function() {
 			return this.core
 		},
 			this.collisionReact = function(obj) {
@@ -40,11 +34,18 @@ define([
 
 	var AsteroidContainer = Class.$extend({
 		__init__ : function(canvas) {
+			var asteroidContainer = this
 			this.name = 'AsteroidContainer'
 			var astCont = this
 			this.cnvs = canvas
 			this.asteroids = []
-			this.asteroidProbability = 0.55
+			this.asteroidProbability = 0.3
+			this.image = new Image();  
+			this.imgLoaded = false;
+			this.image.src = 'imgs/asteroid.png';
+			this.image.onload = function () { 
+				asteroidContainer.imgLoaded = true;
+			},
 			astCont.interval = setInterval(function() {
 				var ps = Math.random()
 				if(ps < astCont.asteroidProbability) {
@@ -89,11 +90,10 @@ define([
 
 		draw : function(ctx) {
 
-			for(i = 0; i < this.asteroids.length; i++) {
+			if(this.imgLoaded) {
+				for(i = 0; i < this.asteroids.length; i++) {			
 
-				if(this.asteroids[i].imgLoaded) {
-
-					ctx.drawImage(this.asteroids[i].image, 
+					ctx.drawImage(this.image, 
 						this.asteroids[i].x - this.asteroids[i].radius,  // find center of collision core
 						this.asteroids[i].y - this.asteroids[i].radius, 
 						this.asteroids[i].sWidth, 

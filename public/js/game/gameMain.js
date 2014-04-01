@@ -24,12 +24,38 @@ define([
     ExplosionManager,
     GOView
 ){
+    function resizeGame() {
+        var gameArea = document.getElementById('gameArea');
+        var gameCanvas = document.getElementById('gameCanvas');
+        var widthToHeight = 16 / 9;
+        var newWidth = window.innerWidth;
+        var newHeight = window.innerHeight;
+        var newWidthToHeight = newWidth / newHeight;
+
+        if (newWidthToHeight > widthToHeight) {
+        newWidth = newHeight * widthToHeight;
+        document.getElementById('gameArea').style.height = newHeight + 'px';
+        document.getElementById('gameArea').style.width = newWidth + 'px';
+        } else {
+        newHeight = newWidth / widthToHeight;
+        document.getElementById('gameArea').style.width = newWidth + 'px';
+        document.getElementById('gameArea').style.height = newHeight + 'px';
+        }
+
+        document.getElementById('gameArea').style.marginTop = (-newHeight / 2) + 'px';
+        document.getElementById('gameArea').style.marginLeft = (-newWidth / 2) + 'px';
+
+        var gameCanvas = document.getElementById('gameCanvas');
+        document.getElementById('gameCanvas').width = newWidth;
+        document.getElementById('gameCanvas').height = newHeight;
+    }
 
     var Game = Class.$extend({
 
         __init__: function(canvas) {
             _.extend(this, Backbone.Events);
-          
+            
+            resizeGame()
             this.fps = 60;
             this.StarsAmount = 22;
             this.running = false;
@@ -54,6 +80,10 @@ define([
             this.keys = []; // keys pressed
            
             var game = this;
+
+            $(window).bind("resize", function() {
+                resizeGame()
+            });
 
             $(window).bind("keypress", function() { 
 
@@ -83,6 +113,8 @@ define([
                     this.gameoverView.show(this.score);
                   }
                   $(window).unbind("keypress");
+                  $(window).unbind("resize");
+                  $(window).unbind("ready");
                   this.StarSky.deleteStars();
                   this.AsteroidContainer.deleteAsteroids();
                   clearInterval(this.interval);

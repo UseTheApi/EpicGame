@@ -4,6 +4,7 @@ define([
 	Backbone
   
 ){
+	
 	var views = {};
 	var ViewManager = _.clone(Backbone.Events);
 	ViewManager.on("showView", function(viewData) { // listen for event...

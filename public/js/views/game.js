@@ -32,7 +32,6 @@ define([
             this.game.Stop();
             this.$el.hide();
         }
-
     });
 
     return new View();
