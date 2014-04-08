@@ -1,5 +1,7 @@
 module.exports = function (grunt) {
     grunt.initConfig({
+
+
         watch: {
             fest: {
                 files: ['templates/*.xml'],
@@ -8,6 +10,15 @@ module.exports = function (grunt) {
                     atBegin: true
                 }
             },
+
+            css: {
+                files: 'public/*.scss',
+                tasks: ['sass'],
+                options: {
+                    atBegin: true
+                }
+            },
+
             express: {
                 files:  [
                     'routes/**/*.js',
@@ -55,12 +66,26 @@ module.exports = function (grunt) {
                     }
                 }
             }
+        },
+
+        sass : {
+            css: {
+                files: [{
+                    expand: true,
+                    cwd: 'public/css',
+                    src: '*.scss',
+                    dest: 'public/css',
+                    ext: '.css'
+                }]
+
+            }
         }
     });
 
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-express-server');
     grunt.loadNpmTasks('grunt-fest');
+    grunt.loadNpmTasks('grunt-contrib-sass');
 
     grunt.registerTask('default', ['express', 'watch']);
 

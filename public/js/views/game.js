@@ -17,18 +17,19 @@ define([
         game: null,
         viewName: "game",
         initialize: function () {
-       
+            this.render();
+            this.hide();
         },
         render: function () {
             this.$el.html(this.template);
-            this.game = new Game($('.game__scene')[0]);
         },
         show: function () {
             VM.trigger('showView', { name: this.viewName, view : this });
-            this.render();
             this.$el.show();
+            this.game = new Game($('.game__scene')[0]);
         },
         hide: function () {
+            if(this.game != null)
             this.game.Stop();
             this.$el.hide();
         }

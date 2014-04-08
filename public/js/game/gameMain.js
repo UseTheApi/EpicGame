@@ -68,7 +68,6 @@ define([
             this.SpaceShip = new SpaceShip(0, this.cnvs.height / 2, 'imgs/rocket.png',canvas, this.ctx); // need resource handler
             this.StarSky = new StarSky(this.cnvs, this.StarsAmount);
         
-           // this.ExplosionManager = new ExplosionManager();
             this.gameoverView = new GOView();
             this.coldet = new CollisionDetector();
             this.on("SpaceShipCrash", function() {

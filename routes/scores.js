@@ -24,7 +24,7 @@ module.exports = {
 			res.setHeader('Content-Length', Buffer.byteLength(s));
 			res.end(s);
 
-		},400) // just to test loading img :)
+		},1) // just to test loading img :)
 	
 	},
 
@@ -74,7 +74,7 @@ module.exports = {
 		var s = JSON.stringify(newScore);
 		res.setHeader('Content-Type', 'application/javascript');
 		res.setHeader('Content-Length', Buffer.byteLength(s));
-		res.end(s);
+		setTimeout(function(){res.end(s);}, 1);
 	},
 
 	del :function(req, res){
