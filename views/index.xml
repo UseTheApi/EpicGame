@@ -10,7 +10,9 @@
 		<link rel="stylesheet" type="text/css" href="css/main.css" />
 	</head>
 	<body>
-		<div id="page"></div>
+	    <div id="main"></div>
+	    <div id="scoreboard"></div>
+	    <div id="game"></div>
 		<fest:if test="json.development">
 			<script data-main="js/main" src="js/lib/require.js"></script>
 		</fest:if>
@@ -18,7 +20,7 @@
 			<script>
 				console.time('load');
 			</script>
-			<script src="js/build/main.min.js"></script>
+			<script src="js/build.min.js"></script>
 			<script>
 				require(['main'], function(){
 					console.timeEnd('load');
