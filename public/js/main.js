@@ -20,7 +20,8 @@ require.config({
         },
         'classy' : {
             exports: 'Class',
-        "socket.io": {
+        },
+        'socket.io': {
             exports: "io"
         }
     }

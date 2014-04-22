@@ -95,7 +95,7 @@ define([
 	// Обмен сообщениями
 	server.on('message', function(data, answer){
 		console.log('message', data);
-		answer('answer');
+		answer(data);
 	});
 
 	window.server = server;
