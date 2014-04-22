@@ -5,7 +5,10 @@ require.config({
         jquery: "lib/jquery",
         underscore: "lib/underscore",
         backbone: "lib/backbone",
-        classy: "lib/classy"
+        classy: "lib/classy",
+        Connector: "lib/Connector",
+        FnQuery: "lib/FnQuery",
+        "socket.io": "/socket.io/socket.io"
     },
     shim: {
         'backbone': {
@@ -16,7 +19,9 @@ require.config({
             exports: '_'
         },
         'classy' : {
-            exports: 'Class'
+            exports: 'Class',
+        "socket.io": {
+            exports: "io"
         }
     }
 });
