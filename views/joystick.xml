@@ -6,10 +6,22 @@
 		<title>
 			<fest:value>json.title</fest:value>
 		</title>
-		<meta name="viewport" content="..." />
+		<meta name="viewport" content="
+		    initial-scale=1.0,
+		    user-scalable=no,
+		    maximum-scale=1,
+		    minimum-scale=1"/>	
 	</head>
 	<body>
-		Hello world!
+
+		<form>
+			<input id="token" />
+			<button id="connect" type="submit">connect</button>
+		</form>
+		<div id="message"></div>
 	</body>
+	<script type="text/javascript" src="js/lib/require.js"></script>
+	<script type="text/javascript" src="js/lib/jquery.js"></script>
+	<script type="text/javascript" src="client/joystick.js"></script>
 </html>
 </fest:template>

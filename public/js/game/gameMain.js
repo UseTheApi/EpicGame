@@ -9,7 +9,8 @@ define([
     'game/collisionDetector',
     'game/enemies',
     'game/explosionManager',
-    'views/gameover'
+    'views/gameover',
+    'lib/Connector'
 ], function(
     Backbone,
     Class,
@@ -21,8 +22,11 @@ define([
     CollisionDetector,
     EnemyContainer,
     ExplosionManager,
-    GOView
+    GOView,
+    Connector
 ){
+
+
     function resizeGame() {
         var gameArea = document.getElementById('gameArea');
         var gameCanvas = document.getElementById('gameCanvas');
@@ -53,6 +57,19 @@ define([
 
         __init__: function(canvas) {
             _.extend(this, Backbone.Events);
+
+           this.message = document.getElementById('message');
+
+
+           this.server = new Connector({
+               server: ['getToken', 'bind'],
+               remote: '/console'
+           });
+
+           this.initServer(this.server);
+
+           
+
             
             resizeGame()
             this.fps = 60;
@@ -82,29 +99,108 @@ define([
                 resizeGame()
             });
 
-            $(window).bind("keypress", function() { 
+            $(window).bind("keypress", function() {
 
-                game.AsteroidContainer = new AsteroidContainer(game.cnvs);
+                game.Start(game); // dirty 
 
-                game.EnemyContainer = new EnemyContainer(game.cnvs);
-
-                game.StarSky.createStars(this.StarsAmount);
-
-                game.AsteroidContainer.createAsteroids(this.AsteroidAmount);
-                
-                game.interval = setInterval(function() { game.render(); }, 1000/this.fps);
-
-                game.scoreInterval = setInterval(function() {game.score +=1;}, 200)
-                $(window).unbind("keypress");
-
-                document.body.addEventListener("keydown", function (e) {
-                    game.keys[e.keyCode] = true;
-                });
-                document.body.addEventListener("keyup", function (e) {
-                    game.keys[e.keyCode] = false;
-                });
-                game.running = true;
             });
+        },
+
+
+        initS : function(){
+            console.log('initS')
+            this.message.innerHTML = 'ready';
+            var self = this;
+            // Если id нет
+            if (!localStorage.getItem('consoleguid')){
+                // Получаем токен
+                this.server.getToken(function(token){
+                    $('#message').html('token: ' + token);
+                });
+            } else { // иначе
+                // переподключаемся к уже созданной связке
+                this.reconnect();
+            }
+        },
+        // Переподключение
+        reconnect : function(){
+            console.log('reconnect')
+            var self = this;
+
+            // Используем сохранненный id связки
+            this.server.bind({guid: localStorage.getItem('consoleguid')}, function(data){
+                // Если все ок
+                if (data.status == 'success'){
+                    // Стартуем
+                    console.log('starx');
+                    self.start(data.guid);
+                // Если связки уже нет
+                } else if (data.status == 'undefined guid'){
+                    // Начинаем все заново
+                    localStorage.removeItem('consoleguid');
+                    this.initS();
+                }
+            });
+        },
+
+
+       start: function(guid){
+           console.log(this)
+
+           // Сохраняем id связки
+           localStorage.setItem('consoleguid', guid);
+           $('#message').html('game');
+           this.Start(this);
+       },
+
+
+        initServer: function() {            
+
+            var self =  this;
+            // На подключении игрока стартуем игру
+            this.server.on('player-joined', function(data){
+                // Передаем id связки консоль-джостик
+                console.log('player join')
+                self.start(data.guid);
+            });
+
+         
+            this.server.on('reconnect', this.reconnect);
+          
+
+            this.initS();
+
+            // Обмен сообщениями
+            this.server.on('message', function(data, answer){
+                console.log('message', data);
+                answer('answer');
+            });
+        },
+
+        Start: function(game) {
+            console.log(this)
+
+            game.AsteroidContainer = new AsteroidContainer(game.cnvs);
+
+            game.EnemyContainer = new EnemyContainer(game.cnvs);
+
+            game.StarSky.createStars(this.StarsAmount);
+
+            game.AsteroidContainer.createAsteroids(this.AsteroidAmount);
+
+            game.interval = setInterval(function() { game.render(); }, 1000/game.fps);
+
+            game.scoreInterval = setInterval(function() {game.score +=1;}, 200)
+            $(window).unbind("keypress");
+
+            document.body.addEventListener("keydown", function (e) {
+                game.keys[e.keyCode] = true;
+            });
+            document.body.addEventListener("keyup", function (e) {
+                game.keys[e.keyCode] = false;
+            });
+            game.running = true;
+
         },
 
         Stop: function(gameover) {
