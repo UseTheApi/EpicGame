@@ -107,8 +107,8 @@ define([
         },
 
 
-        initS : function(){
-            console.log('initS')
+        initToken : function(){
+            console.log('initToken')
             this.message.innerHTML = 'ready';
             var self = this;
             // Если id нет
@@ -138,7 +138,7 @@ define([
                 } else if (data.status == 'undefined guid'){
                     // Начинаем все заново
                     localStorage.removeItem('consoleguid');
-                    this.initS();
+                    this.initToken();
                 }
             });
         },
@@ -168,7 +168,7 @@ define([
             this.server.on('reconnect', this.reconnect);
           
 
-            this.initS();
+            this.initToken();
 
             // Обмен сообщениями
             this.server.on('message', function(data, answer){
