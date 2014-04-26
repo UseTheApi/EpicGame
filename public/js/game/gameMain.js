@@ -60,7 +60,7 @@ define([
 
            this.message = document.getElementById('message');
 
-
+           // this.server нужно сделать синглтоном, сейчас он создается каждый раз
            this.server = new Connector({
                server: ['getToken', 'bind'],
                remote: '/console'
@@ -70,7 +70,6 @@ define([
 
            
 
-            
             resizeGame()
             this.fps = 60;
             this.StarsAmount = 22;
@@ -114,7 +113,7 @@ define([
             // Если id нет
             if (!localStorage.getItem('consoleguid')){
                 // Получаем токен
-                this.server.getToken(function(token){
+                this.server.getToken(function(token){   
                     $('#message').html('token: ' + token);
                 });
             } else { // иначе
@@ -145,7 +144,7 @@ define([
 
 
        start: function(guid){
-           console.log(this)
+           console.log('start from serv')
 
            // Сохраняем id связки
            localStorage.setItem('consoleguid', guid);

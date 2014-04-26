@@ -13,6 +13,7 @@ define([
         template: tmpl,
         el: '#gameover',
         initialize: function () {
+            this.$el.hide(); // dirty fix, dunno
         },
         render: function (score) {
             this.$el.html(this.template({
