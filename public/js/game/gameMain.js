@@ -125,7 +125,7 @@ define([
         // Переподключение
         reconnect : function(){
             console.log('reconnect')
-            var self = this;
+            var self = this; // надо сохранять контекст
 
             // Используем сохранненный id связки
             this.server.bind({guid: localStorage.getItem('consoleguid')}, function(data){
@@ -138,7 +138,7 @@ define([
                 } else if (data.status == 'undefined guid'){
                     // Начинаем все заново
                     localStorage.removeItem('consoleguid');
-                    this.initToken();
+                    self.initToken();
                 }
             });
         },
