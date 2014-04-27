@@ -44,7 +44,7 @@ module.exports = function (grunt) {
             },
 
             css: {
-                files: 'public/*.scss',
+                files: 'public/css/*.sass',
                 tasks: ['sass'],
                 options: {
                     atBegin: true
@@ -105,7 +105,7 @@ module.exports = function (grunt) {
                 files: [{
                     expand: true,
                     cwd: 'public/css',
-                    src: '*.scss',
+                    src: 'main.sass',
                     dest: 'public/css',
                     ext: '.css'
                 }]
