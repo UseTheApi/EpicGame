@@ -124,6 +124,6 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-concat');
 
     grunt.registerTask('default', ['express', 'watch']);
-    grunt.registerTask('build',['fest', 'requirejs:build','concat:build', 'uglify:build']);
+    grunt.registerTask('build',['fest', 'sass', 'requirejs:build','concat:build', 'uglify:build']);
 
 };
