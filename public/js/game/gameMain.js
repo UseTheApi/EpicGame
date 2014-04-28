@@ -10,7 +10,7 @@ define([
     'game/enemies',
     'game/explosionManager',
     'views/gameover',
-    'lib/Connector'
+    'Connector'
 ], function(
     Backbone,
     Class,
