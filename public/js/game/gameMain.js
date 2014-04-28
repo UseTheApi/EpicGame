@@ -83,7 +83,7 @@ define([
             this.Util.greeting(this.ctx);
             this.SpaceShip = new SpaceShip(0, this.cnvs.height / 2, 'imgs/rocket.png',canvas, this.ctx); // need resource handler
             this.StarSky = new StarSky(this.cnvs, this.StarsAmount);
-        
+            this.haveTouch = false;
             this.gameoverView = new GOView();
             this.coldet = new CollisionDetector();
             this.on("SpaceShipCrash", function() {
@@ -91,6 +91,9 @@ define([
             });
 
             this.keys = []; // keys pressed
+
+            this.rotRateGamma = 0;
+            this.rotRateAlpha = 0;
            
             var game = this;
 
@@ -171,7 +174,15 @@ define([
 
             // Обмен сообщениями
             this.server.on('message', function(data, answer){
-                console.log('message', data);
+                if(data.type == 'touch')
+                {
+                    self.haveTouch = true
+                }
+                if(data.type == 'rotate')
+                {
+                    self.rotRateAlpha = data.alpha
+                    self.rotRateBeta = data.beta
+                }
                 answer('answer');
             });
         },

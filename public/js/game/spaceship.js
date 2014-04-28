@@ -74,7 +74,17 @@ define([
 		update : function(game) {
 
 			if(!this.fail) {
-			if(game.keys[38]) { // up
+
+				this.x += game.rotRateAlpha/10
+				this.y += -game.rotRateBeta/10
+
+				if(game.haveTouch)
+				{
+					this.bulletContainer.createBullet(this.x + this.sWidth, this.y + this.sHeight/2, this.ctx)
+					game.haveTouch = false
+				}
+				this.bulletContainer.update();
+			/*if(game.keys[38]) { // up
 				this.vy = -this.dy; this.direction = ''; 
 			}
 			if(game.keys[40]) { //down
@@ -98,7 +108,7 @@ define([
 			this.x += this.vx;
 			this.vy *= 0.98; // friction 
 			this.vx *= 0.98;
-			this.bulletContainer.update();
+			this.bulletContainer.update();*/
 			}
 			else {
 				game.fps = 4;
