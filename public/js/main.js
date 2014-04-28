@@ -8,7 +8,7 @@ require.config({
         classy: "lib/classy",
         Connector: "lib/Connector",
         FnQuery: "lib/FnQuery",
-        'socket.io': "lib/socket.io"
+        'socket.io': "/socket.io/socket.io"
     },
     shim: {
         'backbone': {
