@@ -68,8 +68,6 @@ define([
 
            this.initServer(this.server);
 
-           
-
             resizeGame()
             this.fps = 60;
             this.StarsAmount = 22;
@@ -80,8 +78,13 @@ define([
             this.ctx.fillRect(0, 0, this.cnvs.width, this.cnvs.height);
             this.score = 0;
             this.Util = new Util(canvas);
-            this.Util.greeting(this.ctx);
-            this.SpaceShip = new SpaceShip(0, this.cnvs.height / 2, 'imgs/rocket.png',canvas, this.ctx); // need resource handler
+
+            // if input comes from controller (else- keyboard)
+            this.useController = false;
+
+            this.gameToken;
+            
+            this.SpaceShip = new SpaceShip(this.cnvs.width/3, this.cnvs.height / 2, 'imgs/rocket.png',canvas, this.ctx); // need resource handler
             this.StarSky = new StarSky(this.cnvs, this.StarsAmount);
             this.haveTouch = false;
             this.gameoverView = new GOView();
@@ -107,8 +110,6 @@ define([
 
             });
         },
-
-
         initToken : function(){
             console.log('initToken')
             this.message.innerHTML = 'ready';
@@ -117,7 +118,10 @@ define([
             if (!localStorage.getItem('consoleguid')){
                 // Получаем токен
                 this.server.getToken(function(token){   
-                    $('#message').html('token: ' + token);
+                   // $('#message').html('token: ' + token);
+                    self.gameToken = token
+                    self.Util.greeting(self.ctx, self.gameToken);
+
                 });
             } else { // иначе
                 // переподключаемся к уже созданной связке
@@ -152,6 +156,7 @@ define([
            // Сохраняем id связки
            localStorage.setItem('consoleguid', guid);
            $('#message').html('game');
+           this.useController = true;
            this.Start(this);
        },
 
@@ -203,12 +208,15 @@ define([
             game.scoreInterval = setInterval(function() {game.score +=1;}, 200)
             $(window).unbind("keypress");
 
-            document.body.addEventListener("keydown", function (e) {
-                game.keys[e.keyCode] = true;
-            });
-            document.body.addEventListener("keyup", function (e) {
-                game.keys[e.keyCode] = false;
-            });
+            if(!this.useController)
+            {
+                document.body.addEventListener("keydown", function (e) {
+                    game.keys[e.keyCode] = true;
+                });
+                document.body.addEventListener("keyup", function (e) {
+                    game.keys[e.keyCode] = false;
+                });
+            }
             game.running = true;
 
         },

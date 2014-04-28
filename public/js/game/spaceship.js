@@ -75,40 +75,46 @@ define([
 
 			if(!this.fail) {
 
-				this.x += game.rotRateAlpha/10
-				this.y += -game.rotRateBeta/10
+			if(game.useController)
+			{
+				this.vx = game.rotRateAlpha/5
+				this.vy = -game.rotRateBeta/10
+				
 
 				if(game.haveTouch)
 				{
 					this.bulletContainer.createBullet(this.x + this.sWidth, this.y + this.sHeight/2, this.ctx)
 					game.haveTouch = false
 				}
-				this.bulletContainer.update();
-			/*if(game.keys[38]) { // up
-				this.vy = -this.dy; this.direction = ''; 
 			}
-			if(game.keys[40]) { //down
-				this.vy = this.dy; this.direction = '';  
+			else
+			{
+				if(game.keys[38]) { // up
+					this.vy = -this.dy; this.direction = ''; 
+				}
+				if(game.keys[40]) { //down
+					this.vy = this.dy; this.direction = '';  
 
-			}
-			if(game.keys[37]) { // back
-				this.vx = -this.dx; this.direction = ''; 
+				}
+				if(game.keys[37]) { // back
+					this.vx = -this.dx; this.direction = ''; 
 
-			}
-			if(game.keys[39]) { // forward
-				this.vx = this.dx; this.direction = ''; 
-			}
-			if(game.keys[32]) { //attack with bullet
-				//debugger
-				this.bulletContainer.createBullet(this.x + this.sWidth, this.y + this.sHeight/2, this.ctx)
-				game.keys[32] = false;
+				}
+				if(game.keys[39]) { // forward
+					this.vx = this.dx; this.direction = ''; 
+				}
+				if(game.keys[32]) { //attack with bullet
+					//debugger
+					this.bulletContainer.createBullet(this.x + this.sWidth, this.y + this.sHeight/2, this.ctx)
+					game.keys[32] = false;
+				}
 			}
 			//this.vy += this.gravity; // need gravity or not?
 			this.y += this.vy;
 			this.x += this.vx;
 			this.vy *= 0.98; // friction 
 			this.vx *= 0.98;
-			this.bulletContainer.update();*/
+			this.bulletContainer.update();
 			}
 			else {
 				game.fps = 4;
