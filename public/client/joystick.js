@@ -25,7 +25,7 @@ require.config({
 
 require(['js/lib/Connector.js'], function(Connector) {
 
-	window.addEventListener("devicemotion", move, false);
+	window.addEventListener("devicemotion", motion, false);
 	window.addEventListener('orientationchange', changeOrient);
 	window.addEventListener('touchstart', touch);
 
@@ -94,15 +94,15 @@ require(['js/lib/Connector.js'], function(Connector) {
         }
     };
 
-    function move(evt) {
+    function motion(evt) {
 
-    	var xSpeed =  evt.acceleration.x;
-    	var ySpeed = -evt.acceleration.y;
+    	//var xSpeed =  evt.acceleration.x;
+    	//var ySpeed = -evt.acceleration.y;
         server.send({
-            type: 'accel',
-            xs: xSpeed,
-            ys: ySpeed
-      
+            type: 'rotate',
+            alpha: evt.rotationRate.alpha,
+            beta: evt.rotationRate.beta,
+            gamma: evt.rotationRate.gamma
         });
         //console.log(alpha,betta,gamma);
     };
