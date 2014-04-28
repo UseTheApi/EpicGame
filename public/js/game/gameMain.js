@@ -78,7 +78,7 @@ define([
             this.ctx.fillRect(0, 0, this.cnvs.width, this.cnvs.height);
             this.score = 0;
             this.Util = new Util(canvas);
-
+            this.orientation = 0;
             // if input comes from controller (else- keyboard)
             this.useController = false;
 
@@ -183,10 +183,15 @@ define([
                 {
                     self.haveTouch = true
                 }
-                if(data.type == 'rotate')
+                else if(data.type == 'rotate')
                 {
                     self.rotRateAlpha = data.alpha
                     self.rotRateBeta = data.beta
+                }
+                else if(data.type == 'orient')
+                {
+                    console.log('Rotation angle: ' + data.angle)
+                    self.orientation = data.angle
                 }
                 answer('answer');
             });

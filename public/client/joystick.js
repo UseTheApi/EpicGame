@@ -82,28 +82,36 @@ require(['js/lib/Connector.js'], function(Connector) {
 	};
 
     function changeOrient() {
-        if (window.orientation % 90 == 0) {
-            console.log('portrait');
+        //if (window.orientation % 90 == 0) {
             server.send({
-                orient: 'portrait'
+            	type: 'orient',
+                angle: window.orientation
             });
-        } else {
+        /*} else {
             server.send({
-                orient: 'landscape'
+            	type: 'orient',
+                angle = window.orientation
             });
-        }
+        }*/
     };
 
     function motion(evt) {
-
     	//var xSpeed =  evt.acceleration.x;
     	//var ySpeed = -evt.acceleration.y;
-        server.send({
-            type: 'rotate',
-            alpha: evt.rotationRate.alpha,
-            beta: evt.rotationRate.beta,
-            gamma: evt.rotationRate.gamma
-        });
+    	 server.send({
+            	type: 'orient',
+                angle: window.orientation
+            }, function(answer)
+            {
+            	server.send({
+	            type: 'rotate',
+	            alpha: evt.rotationRate.alpha,
+	            beta: evt.rotationRate.beta,
+	            gamma: evt.rotationRate.gamma
+        	});
+
+            });
+        
         //console.log(alpha,betta,gamma);
     };
 
@@ -129,7 +137,7 @@ require(['js/lib/Connector.js'], function(Connector) {
 
 	// Обмен сообщениями
 	server.on('message', function(data, answer){
-		console.log('message herere', data);
+		console.log('message here', data);
 		answer(data);
 	});
 

@@ -73,12 +73,31 @@ define([
 
 		update : function(game) {
 
+			var alpha = game.rotRateAlpha/5
+			var beta = game.rotRateBeta/10
 			if(!this.fail) {
-
 			if(game.useController)
 			{
-				this.vx = game.rotRateAlpha/5
-				this.vy = -game.rotRateBeta/10
+				switch(game.orientation)
+				{
+					case 0:
+						this.vx = beta
+						this.vy = alpha
+						break;
+					case 90:
+						this.vx = alpha
+						this.vy = -beta
+						break;
+					case -90:
+						this.vx = -alpha
+						this.vy = beta
+						break;
+					case 180:
+						this.vx = -beta
+						this.vy = -alpha
+						break;
+				}
+				
 				
 
 				if(game.haveTouch)
