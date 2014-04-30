@@ -10,7 +10,7 @@ define([
 			this.cnvs = canvas;
 		},
 
-		greeting : function(ctx, token) {
+		greeting : function(ctx) {
 			ctx.font="30px Verdana";
 			// Create gradient
 			var gradient = ctx.createLinearGradient(0,0,this.cnvs.width,0);
@@ -20,7 +20,7 @@ define([
 			// Fill with gradient
 			ctx.fillStyle = gradient;
 			ctx.fillText("To start game press anykey!",this.cnvs.width/2-200,this.cnvs.height/2); 
-			ctx.fillText("you can use token: " + token, this.cnvs.width/2-200, this.cnvs.height/2 + 50)
+		//	ctx.fillText("you can use token: " + token, this.cnvs.width/2-200, this.cnvs.height/2 + 50)
 		},
 
 		drawscore: function(ctx, score) {

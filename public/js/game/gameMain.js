@@ -10,7 +10,7 @@ define([
     'game/enemies',
     'game/explosionManager',
     'views/gameover',
-    'Connector'
+    'lib/Connector'
 ], function(
     Backbone,
     Class,
@@ -78,13 +78,15 @@ define([
             this.ctx.fillRect(0, 0, this.cnvs.width, this.cnvs.height);
             this.score = 0;
             this.Util = new Util(canvas);
+            this.Util.greeting(this.ctx);
+
             this.orientation = 0;
             // if input comes from controller (else- keyboard)
             this.useController = false;
 
             this.gameToken;
             
-            this.SpaceShip = new SpaceShip(this.cnvs.width/3, this.cnvs.height / 2, 'imgs/rocket.png',canvas, this.ctx); // need resource handler
+      //      this.SpaceShip = new SpaceShip(this.cnvs.width/3, this.cnvs.height / 2, 'imgs/rocket.png',canvas, this.ctx); // need resource handler
             this.StarSky = new StarSky(this.cnvs, this.StarsAmount);
             this.haveTouch = false;
             this.gameoverView = new GOView();
@@ -118,9 +120,8 @@ define([
             if (!localStorage.getItem('consoleguid')){
                 // Получаем токен
                 this.server.getToken(function(token){   
-                   // $('#message').html('token: ' + token);
-                    self.gameToken = token
-                    self.Util.greeting(self.ctx, self.gameToken);
+                    $('#message').html('token: ' + token);
+                  //  self.gameToken = token
 
                 });
             } else { // иначе
@@ -154,7 +155,7 @@ define([
            console.log('start from serv')
 
            // Сохраняем id связки
-           localStorage.setItem('consoleguid', guid);
+          // localStorage.setItem('consoleguid', guid);
            $('#message').html('game');
            this.useController = true;
            this.Start(this);
@@ -185,12 +186,13 @@ define([
                 }
                 else if(data.type == 'rotate')
                 {
+                  //  console.log(data.alpha,' ', data.beta)
                     self.rotRateAlpha = data.alpha
                     self.rotRateBeta = data.beta
                 }
                 else if(data.type == 'orient')
                 {
-                    console.log('Rotation angle: ' + data.angle)
+            //        console.log('Rotation angle: ' + data.angle)
                     self.orientation = data.angle
                 }
                 answer('answer');
@@ -199,6 +201,8 @@ define([
 
         Start: function(game) {
             console.log(this)
+
+            game.SpaceShip = new SpaceShip(game.cnvs.width/3, game.cnvs.height / 2, 'imgs/rocket.png',game.cnvs, game.ctx); // need resource handler
 
             game.AsteroidContainer = new AsteroidContainer(game.cnvs);
 

@@ -20,8 +20,18 @@
 		</form>
 		<div id="message"></div>
 	</body>
-	<script type="text/javascript" src="js/lib/require.js"></script>
-	<script type="text/javascript" src="js/lib/jquery.js"></script>
-	<script type="text/javascript" src="client/joystick.js"></script>
+		<fest:if test="json.development">
+			<script data-main="client/joystick" src="js/lib/require.js"></script>
+		</fest:if>
+
+        <img src='imgs/fire.png' />
+
+		<fest:if test="!json.development">
+			<script>
+				console.time('load');
+			</script>
+			<script src="client/build.min.js"></script>
+		</fest:if>
+        
 </html>
 </fest:template>

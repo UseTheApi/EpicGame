@@ -17,6 +17,9 @@ define([
 ){
 	var SpaceShip = Class.$extend({
 		__init__ : function(x,y,src,cnvs, ctx) {
+
+		//	console.log(x, 'x y ', y)
+
 			this.name = 'SpaceShip'
 			var ship = this;
 			var game = game;
@@ -73,16 +76,20 @@ define([
 
 		update : function(game) {
 
-			var alpha = game.rotRateAlpha/5
-			var beta = game.rotRateBeta/10
+			
+
 			if(!this.fail) {
 			if(game.useController)
 			{
+				var alpha = game.rotRateAlpha/5
+				var beta = game.rotRateBeta/10
+				//console.log(alpha, ' a-b ', beta)
+
 				switch(game.orientation)
 				{
 					case 0:
-						this.vx = beta
-						this.vy = alpha
+						this.vx = game.rotRateBeta/10
+						this.vy = game.rotRateAlpha/5
 						break;
 					case 90:
 						this.vx = alpha
@@ -97,7 +104,7 @@ define([
 						this.vy = -alpha
 						break;
 				}
-				
+
 				
 
 				if(game.haveTouch)
@@ -131,6 +138,9 @@ define([
 			//this.vy += this.gravity; // need gravity or not?
 			this.y += this.vy;
 			this.x += this.vx;
+
+
+
 			this.vy *= 0.98; // friction 
 			this.vx *= 0.98;
 			this.bulletContainer.update();
@@ -166,6 +176,11 @@ define([
 						this.sHeight, this.sWidth)
 				}
 				else {
+					if(isNaN(this.x) || isNaN(this.y)) {
+						this.x = 214;
+						this.y = 214;
+					}
+					//console.log('draw spaceship hfdsfa',this.x,this.y)
    				    ctx.drawImage(this.image, this.x, this.y,
 				    this.sWidth, this.sHeight);
 				    this.bulletContainer.draw(ctx)

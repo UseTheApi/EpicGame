@@ -2,12 +2,12 @@ require.config({
     urlArgs: "_=" + (new Date()).getTime(),
     baseUrl: "js",
     paths: {
-	    jquery: "/js/lib/jquery",
-        underscore: "/js/lib/underscore",
-        backbone: "/js/lib/backbone",
-        Connector: "/js/lib/Connector",
-        FnQuery: "/js/lib/FnQuery",
-        "socket.io": "/socket.io/socket.io"
+	    jquery: "../js/lib/jquery",
+        underscore: "../js/lib/underscore",
+        backbone: "../js/lib/backbone",
+        Connector: "../js/lib/Connector",
+        FnQuery: "../js/lib/FnQuery",
+        "socket.io": "../js/lib/socket.io"
     },
     shim: {
 	    'backbone': {
@@ -23,7 +23,13 @@ require.config({
     }
 });
 
-require(['js/lib/Connector.js'], function(Connector) {
+
+require(['../js/lib/Connector.js'], function(Connector) {
+
+	if(!window.DeviceMotionEvent || !window.DeviceOrientationEvent ) {
+		alert('Not supported');
+	} else {
+
 
 	window.addEventListener("devicemotion", motion, false);
 	window.addEventListener('orientationchange', changeOrient);
@@ -32,6 +38,7 @@ require(['js/lib/Connector.js'], function(Connector) {
 	var message = document.getElementById('message');
 	var input = document.getElementById('token');
 	var start, init, reconnect;
+
 
 	// Создаем связь с сервером
 	var server = new Connector({
@@ -127,7 +134,7 @@ require(['js/lib/Connector.js'], function(Connector) {
 	start = function(guid){
 		console.log('start player');
 		// Сохраняем id связки
-		localStorage.setItem('playerguid', guid);
+	//	localStorage.setItem('playerguid', guid);
 		message.innerHTML = 'game';
 	};
 
@@ -142,7 +149,7 @@ require(['js/lib/Connector.js'], function(Connector) {
 	});
 
 	window.server = server;
-
+}
 	/*
 	server.send('message', function(answer){
 		console.log(answer);
