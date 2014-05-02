@@ -97,7 +97,7 @@ module.exports = function (grunt) {
             server: {
                 options: {
                     livereload: true,
-                    port: 9000,
+                    port: 8000,
                     script: 'app.js'
                 }
             }

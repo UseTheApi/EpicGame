@@ -40,6 +40,8 @@ require(['../js/lib/Connector.js'], function(Connector) {
 	var start, init, reconnect;
 
 
+
+
 	// Создаем связь с сервером
 	var server = new Connector({
 			server: ['bind'],
@@ -47,8 +49,20 @@ require(['../js/lib/Connector.js'], function(Connector) {
 		}
 	);
 
+
+
 	// Инициализация
 	init = function(){
+
+		var self = this;
+
+
+		$('#restart').click(function() {
+			self.server.send({
+				type : 'restart'
+			})
+		})
+
 		message.innerHTML = 'ready';
 		// Если id нет
 		if (!localStorage.getItem('playerguid')){
@@ -134,9 +148,11 @@ require(['../js/lib/Connector.js'], function(Connector) {
 	start = function(guid){
 		console.log('start player');
 		// Сохраняем id связки
-	//	localStorage.setItem('playerguid', guid);
+		localStorage.setItem('playerguid', guid);
 		message.innerHTML = 'game';
 	};
+
+
 
 	server.on('reconnect', reconnect);
 
@@ -144,7 +160,11 @@ require(['../js/lib/Connector.js'], function(Connector) {
 
 	// Обмен сообщениями
 	server.on('message', function(data, answer){
-		console.log('message here', data);
+
+		if(data.type == 'gameover') {
+			// TODO показываем очки и форму ввода имени на клиенте
+		}
+
 		answer(data);
 	});
 

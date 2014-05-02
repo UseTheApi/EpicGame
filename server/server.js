@@ -9,8 +9,8 @@ var functions = {
 		if (this.token){
 			token = this.token;
 		} else {
-			var min = parseInt(1000,16);
-			var max = parseInt('ffff',16);
+			var min = parseInt('aa',16);
+			var max = parseInt('ff',16);
 
 			do {
 				token = Math.floor( min + ( max - min ) * Math.random() ).toString(16);

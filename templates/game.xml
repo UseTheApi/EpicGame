@@ -8,6 +8,7 @@
     </ul>
 </div>
 
+<img id="mobile" src="imgs/mobile.png" />
 <div id="message"></div>
 
 <div class="game__screen" id="gameArea">

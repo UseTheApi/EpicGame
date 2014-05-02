@@ -163,8 +163,10 @@ define([
 
 		out: function(game) {
 			if(this.y > this.cnvs.width-178-22 || this.y < -this.sHeight) {
-			 return true;
+				return true;
 			}
+		//	if(this.y > this.cnvs.height) this.y = this.sHeight;
+		//	if(this.y < -this.sHeight) this.y  = this.cnvs.height;
 			if(this.x>this.cnvs.width) this.x = -this.sWidth; 
 			if(this.x<-this.sWidth) this.x = this.cnvs.width;
 		},

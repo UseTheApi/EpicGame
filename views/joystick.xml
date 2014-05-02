@@ -11,6 +11,7 @@
 		    user-scalable=no,
 		    maximum-scale=1,
 		    minimum-scale=1"/>	
+		    <link rel="stylesheet" type="text/css" href="client/css/main.css" />
 	</head>
 	<body>
 
@@ -18,13 +19,14 @@
 			<input id="token" />
 			<button id="connect" type="submit">connect</button>
 		</form>
+		<button id="restart" type="submit">restart</button>
+
 		<div id="message"></div>
 	</body>
 		<fest:if test="json.development">
 			<script data-main="client/joystick" src="js/lib/require.js"></script>
 		</fest:if>
 
-        <img src='imgs/fire.png' />
 
 		<fest:if test="!json.development">
 			<script>

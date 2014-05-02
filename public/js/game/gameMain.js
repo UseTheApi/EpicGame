@@ -66,7 +66,12 @@ define([
                remote: '/console'
            });
 
-           this.initServer(this.server);
+           var game = this;
+
+
+           this.initServer();
+
+           $("#mobile").click(this.initToken.bind(this))
 
             resizeGame()
             this.fps = 60;
@@ -90,9 +95,11 @@ define([
             this.StarSky = new StarSky(this.cnvs, this.StarsAmount);
             this.haveTouch = false;
             this.gameoverView = new GOView();
-            this.coldet = new CollisionDetector();
+          
+
             this.on("SpaceShipCrash", function() {
-                this.Stop(true);
+                console.log("CRASH!")
+                game.Stop(true);
             });
 
             this.keys = []; // keys pressed
@@ -100,7 +107,6 @@ define([
             this.rotRateGamma = 0;
             this.rotRateAlpha = 0;
            
-            var game = this;
 
             $(window).bind("resize", function() {
                 resizeGame()
@@ -126,6 +132,8 @@ define([
                 });
             } else { // иначе
                 // переподключаемся к уже созданной связке
+                this.message.innerHTML = 'already connected';
+
                 this.reconnect();
             }
         },
@@ -153,9 +161,8 @@ define([
 
        start: function(guid){
            console.log('start from serv')
-
            // Сохраняем id связки
-          // localStorage.setItem('consoleguid', guid);
+           localStorage.setItem('consoleguid', guid);
            $('#message').html('game');
            this.useController = true;
            this.Start(this);
@@ -176,12 +183,24 @@ define([
             this.server.on('reconnect', this.reconnect);
           
 
-            this.initToken();
+          
+
+           // this.initToken();
 
             // Обмен сообщениями
             this.server.on('message', function(data, answer){
+
+                if(data.type == 'restart') {
+                    self.Stop(false);
+                    self.Start(self);
+                    console.log('restart');
+                }
+
                 if(data.type == 'touch')
                 {
+                    if(!self.running) {
+                        self.Start(self);
+                    }
                     self.haveTouch = true
                 }
                 else if(data.type == 'rotate')
@@ -202,22 +221,31 @@ define([
         Start: function(game) {
             console.log(this)
 
-            game.SpaceShip = new SpaceShip(game.cnvs.width/3, game.cnvs.height / 2, 'imgs/rocket.png',game.cnvs, game.ctx); // need resource handler
+
+            game.gameoverView.hide();
+
+            game.score = 0;
+
+            game.fps = 60; // возвращаем старое значение
+
+            game.SpaceShip = new SpaceShip(game.cnvs.width/3, game.cnvs.height / 2, 'imgs/rocket.png',game.cnvs, game.ctx); 
 
             game.AsteroidContainer = new AsteroidContainer(game.cnvs);
 
             game.EnemyContainer = new EnemyContainer(game.cnvs);
 
-            game.StarSky.createStars(this.StarsAmount);
+            game.StarSky.createStars(game.StarsAmount);
 
-            game.AsteroidContainer.createAsteroids(this.AsteroidAmount);
+            game.AsteroidContainer.createAsteroids(game.AsteroidAmount);
 
             game.interval = setInterval(function() { game.render(); }, 1000/game.fps);
 
-            game.scoreInterval = setInterval(function() {game.score +=1;}, 200)
+            game.coldet = new CollisionDetector();
+
+            game.scoreInterval = setInterval(function() {game.score += 1;}, 200)
             $(window).unbind("keypress");
 
-            if(!this.useController)
+            if(!game.useController)
             {
                 document.body.addEventListener("keydown", function (e) {
                     game.keys[e.keyCode] = true;
@@ -235,6 +263,10 @@ define([
                   if(gameover) {
                     this.Util.clear(this.ctx);
                     this.gameoverView.show(this.score);
+                    this.server.send({
+                        type: 'gameover',
+                        score: this.score
+                    })
                   }
                   $(window).unbind("keypress");
                   $(window).unbind("resize");
@@ -242,8 +274,10 @@ define([
                   this.StarSky.deleteStars();
                   this.AsteroidContainer.deleteAsteroids();
                   clearInterval(this.interval);
+                  clearInterval(this.scoreInterval);
                   this.clearcanvas(this.ctx); 
                   this.running = false;
+                  console.log("clearing")
                 }
         },
 
