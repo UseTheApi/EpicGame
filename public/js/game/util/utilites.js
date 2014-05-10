@@ -19,7 +19,7 @@ define([
 			gradient.addColorStop("1.0","red");
 			// Fill with gradient
 			ctx.fillStyle = gradient;
-			ctx.fillText("To start game press anykey!",this.cnvs.width/2-200,this.cnvs.height/2); 
+			ctx.fillText("To start game press anykey! Esc to quit.",this.cnvs.width/2-250,this.cnvs.height/2);
 		//	ctx.fillText("you can use token: " + token, this.cnvs.width/2-200, this.cnvs.height/2 + 50)
 		},
 

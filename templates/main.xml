@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <fest:template xmlns:fest="http://fest.mail.ru" context_name="json">
-    <div class="main__game_container well">
+    <div class="main__game_container">
             <div class="main__game-name">
                 <h1>Space Oddity</h1>
                 <small>An epic game by Govorovsky and Lifar</small>

@@ -6,9 +6,6 @@
             <div id="message"></div>
         </div></div>
     <div class="row"><div class="col">
-        <a href="#" class="btn btn-primary">Back</a>
-    </div></div>
-    <div class="row"><div class="col">
         <div class="game__screen" id="gameArea">
             <canvas class="game__scene" id="gameCanvas" width="1200" height="550"></canvas>
         </div>

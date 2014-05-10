@@ -252,7 +252,13 @@ define([
                     game.keys[e.keyCode] = true;
                 });
                 document.body.addEventListener("keyup", function (e) {
-                    game.keys[e.keyCode] = false;
+                    if(e.keyCode == 27 /* ESCAPE */) {
+                        game.Stop()
+                        window.location.href = "#";
+                    }
+                    else {
+                        game.keys[e.keyCode] = false;
+                    }
                 });
             }
             game.running = true;
