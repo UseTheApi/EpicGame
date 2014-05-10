@@ -114,7 +114,6 @@ define([
             });
 
             $(window).bind("keypress", function() {
-
                 game.Start(game); // dirty 
 
             });
@@ -222,6 +221,7 @@ define([
         Start: function(game) {
             console.log(this)
 
+            $('#message-wrapper').hide()
 
             game.gameoverView.hide();
 

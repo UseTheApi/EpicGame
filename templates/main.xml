@@ -1,15 +1,12 @@
 <?xml version="1.0"?>
 <fest:template xmlns:fest="http://fest.mail.ru" context_name="json">
-    <div class="main__game_container">
-            <div class="main__game-name">
-                <h1>Space Oddity</h1>
-                <small>An epic game by Govorovsky and Lifar</small>
-            </div>
+       <div class="logo" style="background: url(imgs/logo.png)"></div>
+        <div class="main__game_container">
             <p>
             <a href="#game" class="btn btn-primary">Start game</a>
             </p>
             <p>
                 <a href="#scoreboard" class="btn btn-info">Scoreboard</a>
             </p>
-    </div>
+        </div>
 </fest:template>
