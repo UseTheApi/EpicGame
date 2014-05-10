@@ -28,6 +28,7 @@ define([
 
 
     function resizeGame() {
+
         var gameArea = document.getElementById('gameArea');
         var gameCanvas = document.getElementById('gameCanvas');
         var widthToHeight = 16 / 9;
