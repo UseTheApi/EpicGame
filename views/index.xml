@@ -7,12 +7,22 @@
 			<fest:value>json.title</fest:value>
 		</title>
 		<meta name="viewport" content="user-scalable=no, initial-scale=1.0" />
-		<link rel="stylesheet" type="text/css" href="css/main.css" />
+        <!-- Include Bootstrap headers: -->
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" />
+
+        <!-- Optional theme -->
+        <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css" />
+
+        <!-- Finish Bootstrap headers: -->
+        <link rel="stylesheet" type="text/css" href="css/main.css" />
 	</head>
 	<body>
-	    <div id="main"></div>
-	    <div id="scoreboard"></div>
-	    <div id="game"></div>
+        <div class="content">
+            <div id="main"></div>
+            <div id="scoreboard"></div>
+            <div id="game"></div>
+        </div>
 		<fest:if test="json.development">
 			<script data-main="js/main" src="js/lib/require.js"></script>
 		</fest:if>
@@ -27,6 +37,9 @@
 				});
 			</script>
 		</fest:if>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+        <!-- Latest compiled and minified JavaScript -->
+        <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
 	</body>
 </html>
 </fest:template>

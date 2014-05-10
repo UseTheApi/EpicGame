@@ -1,19 +1,12 @@
 <?xml version="1.0"?>
 <fest:template xmlns:fest="http://fest.mail.ru" context_name="json">
-    <div class="main">
-    	<div class="main__game-name">
-    		<h1>Epic game</h1>
-    	</div>
-    	<div class="main__panel-name">
-    		<h2>Main Menu</h2>
-    	</div>
-        <ul>
-        	<li class="main__menu-element">
-        		<a href="#scoreboard">Scoreboard</a>
-        	</li>
-        	<li class="main__menu-element">
-        		<a href="#game">Start game</a>
-        	</li>
-		</ul>
-    </div>
+       <div class="logo" style="background: url(imgs/logo.png)"></div>
+        <div class="main__game_container">
+            <p>
+            <a href="#game" class="btn btn-primary">Start game</a>
+            </p>
+            <p>
+                <a href="#scoreboard" class="btn btn-info">Scoreboard</a>
+            </p>
+        </div>
 </fest:template>

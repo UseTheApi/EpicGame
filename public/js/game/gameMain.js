@@ -28,6 +28,7 @@ define([
 
 
     function resizeGame() {
+
         var gameArea = document.getElementById('gameArea');
         var gameCanvas = document.getElementById('gameCanvas');
         var widthToHeight = 16 / 9;
@@ -113,7 +114,6 @@ define([
             });
 
             $(window).bind("keypress", function() {
-
                 game.Start(game); // dirty 
 
             });
@@ -217,6 +217,7 @@ define([
         Start: function(game) {
             console.log(this)
 
+            $('#message-wrapper').hide()
 
             game.gameoverView.hide();
 
@@ -249,8 +250,15 @@ define([
                 document.body.addEventListener("keydown", function(e) {
                     game.keys[e.keyCode] = true;
                 });
-                document.body.addEventListener("keyup", function(e) {
-                    game.keys[e.keyCode] = false;
+
+                document.body.addEventListener("keyup", function (e) {
+                    if(e.keyCode == 27 /* ESCAPE */) {
+                        game.Stop()
+                        window.location.href = "#";
+                    }
+                    else {
+                        game.keys[e.keyCode] = false;
+                    }
                 });
             }
             game.running = true;
