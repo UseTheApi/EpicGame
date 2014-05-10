@@ -117,6 +117,7 @@ define([
                 game.Start(game); // dirty 
 
             });
+            $('#message-wrapper').show()
         },
         initToken : function(){
             console.log('initToken')

@@ -2,9 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4903f65d-5692-4236-adbc-6b62f72ca045" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/tmpl/scoreboard.js" afterPath="$PROJECT_DIR$/public/js/tmpl/scoreboard.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/scoreboard.xml" afterPath="$PROJECT_DIR$/templates/scoreboard.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/game/gameMain.js" afterPath="$PROJECT_DIR$/public/js/game/gameMain.js" />
     </list>
     <ignored path="EpicGame.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -37,10 +35,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="scoreboard.xml" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="scoreboard.xml" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/templates/scoreboard.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.2155797" vertical-offset="0" max-vertical-offset="748">
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="748">
               <caret line="7" column="73" selection-start-line="7" selection-start-column="73" selection-end-line="7" selection-end-column="73" />
               <folding />
             </state>
@@ -57,11 +55,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="gameMain.js" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="gameMain.js" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/public/js/game/gameMain.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="3061" max-vertical-offset="5644">
-              <caret line="216" column="20" selection-start-line="216" selection-start-column="20" selection-end-line="216" selection-end-column="20" />
+            <state vertical-scroll-proportion="0.66342413" vertical-offset="1682" max-vertical-offset="5661">
+              <caret line="119" column="38" selection-start-line="119" selection-start-column="38" selection-end-line="119" selection-end-column="38" />
               <folding />
             </state>
           </provider>
@@ -148,10 +146,10 @@
         <option value="$PROJECT_DIR$/public/css/main.sass" />
         <option value="$PROJECT_DIR$/templates/main.xml" />
         <option value="$PROJECT_DIR$/public/css/main_xml.sass" />
-        <option value="$PROJECT_DIR$/public/js/game/gameMain.js" />
         <option value="$PROJECT_DIR$/templates/game.xml" />
         <option value="$PROJECT_DIR$/public/css/game_xml.sass" />
         <option value="$PROJECT_DIR$/templates/scoreboard.xml" />
+        <option value="$PROJECT_DIR$/public/js/game/gameMain.js" />
       </list>
     </option>
   </component>
@@ -757,22 +755,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/js/game/gameMain.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="3061" max-vertical-offset="5644">
-          <caret line="216" column="20" selection-start-line="216" selection-start-column="20" selection-end-line="216" selection-end-column="20" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/js/views/game.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="570" max-vertical-offset="660">
-          <caret line="38" column="3" selection-start-line="38" selection-start-column="3" selection-end-line="38" selection-end-column="3" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/public/css/main_xml.sass">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-19.115385" vertical-offset="166" max-vertical-offset="986">
@@ -815,8 +797,24 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/templates/scoreboard.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.2155797" vertical-offset="0" max-vertical-offset="748">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="748">
           <caret line="7" column="73" selection-start-line="7" selection-start-column="73" selection-end-line="7" selection-end-column="73" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/js/views/game.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="570" max-vertical-offset="660">
+          <caret line="38" column="3" selection-start-line="38" selection-start-column="3" selection-end-line="38" selection-end-column="3" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/js/game/gameMain.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.66342413" vertical-offset="1682" max-vertical-offset="5661">
+          <caret line="119" column="38" selection-start-line="119" selection-start-column="38" selection-end-line="119" selection-end-column="38" />
           <folding />
         </state>
       </provider>
