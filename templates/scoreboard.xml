@@ -5,7 +5,7 @@
         <div class="well">
             <h1>Scoreboard</h1>
             <fest:if test="json.Scores.length == 0">
-               <p>No scores have been set yet. Be first to <a href="#">play!</a></p>
+               <p>No scores have been set yet. Be first to <a href="#game">play!</a></p>
             </fest:if>
             <fest:if test="json.Scores.length > 0">
             <table class="table">
