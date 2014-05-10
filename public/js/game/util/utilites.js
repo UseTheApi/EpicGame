@@ -1,36 +1,36 @@
 define([
-    'classy'
+	'classy'
 ], function(
-    Class
-){
+	Class
+) {
 
 	var Util = Class.$extend({
 
-		__init__ : function(canvas) {
+		__init__: function(canvas) {
 			this.cnvs = canvas;
 		},
 
-		greeting : function(ctx) {
-			ctx.font="30px Verdana";
+		greeting: function(ctx) {
+			ctx.font = "30px Verdana";
 			// Create gradient
-			var gradient = ctx.createLinearGradient(0,0,this.cnvs.width,0);
-			gradient.addColorStop("0","magenta");
-			gradient.addColorStop("0.5","blue");
-			gradient.addColorStop("1.0","red");
+			var gradient = ctx.createLinearGradient(0, 0, this.cnvs.width, 0);
+			gradient.addColorStop("0", "magenta");
+			gradient.addColorStop("0.5", "blue");
+			gradient.addColorStop("1.0", "red");
 			// Fill with gradient
 			ctx.fillStyle = gradient;
-			ctx.fillText("To start game press anykey!",this.cnvs.width/2-200,this.cnvs.height/2); 
-		//	ctx.fillText("you can use token: " + token, this.cnvs.width/2-200, this.cnvs.height/2 + 50)
+			ctx.fillText("To start game press anykey!", this.cnvs.width / 2 - 200, this.cnvs.height / 2);
+			//	ctx.fillText("you can use token: " + token, this.cnvs.width/2-200, this.cnvs.height/2 + 50)
 		},
 
 		drawscore: function(ctx, score) {
-			ctx.font="15px Verdana";
-			var gradient = ctx.createLinearGradient(0,0,this.cnvs.width,0);
-			gradient.addColorStop("0","magenta");
-			gradient.addColorStop("0.5","blue");
-			gradient.addColorStop("1.0","red");
+			ctx.font = "15px Verdana";
+			var gradient = ctx.createLinearGradient(0, 0, this.cnvs.width, 0);
+			gradient.addColorStop("0", "magenta");
+			gradient.addColorStop("0.5", "blue");
+			gradient.addColorStop("1.0", "red");
 			ctx.fillStyle = gradient;
-			ctx.fillText(score,this.cnvs.width-60,20); 
+			ctx.fillText(score, this.cnvs.width - 60, 20);
 		},
 
 		clear: function(ctx) {

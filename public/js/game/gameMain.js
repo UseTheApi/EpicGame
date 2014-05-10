@@ -24,7 +24,7 @@ define([
     ExplosionManager,
     GOView,
     Connector
-){
+) {
 
 
     function resizeGame() {
@@ -36,13 +36,13 @@ define([
         var newWidthToHeight = newWidth / newHeight;
 
         if (newWidthToHeight > widthToHeight) {
-        newWidth = newHeight * widthToHeight;
-        document.getElementById('gameArea').style.height = newHeight + 'px';
-        document.getElementById('gameArea').style.width = newWidth + 'px';
+            newWidth = newHeight * widthToHeight;
+            document.getElementById('gameArea').style.height = newHeight + 'px';
+            document.getElementById('gameArea').style.width = newWidth + 'px';
         } else {
-        newHeight = newWidth / widthToHeight;
-        document.getElementById('gameArea').style.width = newWidth + 'px';
-        document.getElementById('gameArea').style.height = newHeight + 'px';
+            newHeight = newWidth / widthToHeight;
+            document.getElementById('gameArea').style.width = newWidth + 'px';
+            document.getElementById('gameArea').style.height = newHeight + 'px';
         }
 
         document.getElementById('gameArea').style.marginTop = (-newHeight / 2) + 'px';
@@ -58,20 +58,20 @@ define([
         __init__: function(canvas) {
             _.extend(this, Backbone.Events);
 
-           this.message = document.getElementById('message');
+            this.message = document.getElementById('message');
 
-           // this.server нужно сделать синглтоном, сейчас он создается каждый раз
-           this.server = new Connector({
-               server: ['getToken', 'bind'],
-               remote: '/console'
-           });
+            // this.server нужно сделать синглтоном, сейчас он создается каждый раз
+            this.server = new Connector({
+                server: ['getToken', 'bind'],
+                remote: '/console'
+            });
 
-           var game = this;
+            var game = this;
 
 
-           this.initServer();
+            this.initServer();
 
-           $("#mobile").click(this.initToken.bind(this))
+            $("#mobile").click(this.initToken.bind(this))
 
             resizeGame()
             this.fps = 60;
@@ -90,12 +90,12 @@ define([
             this.useController = false;
 
             this.gameToken;
-            
-      //      this.SpaceShip = new SpaceShip(this.cnvs.width/3, this.cnvs.height / 2, 'imgs/rocket.png',canvas, this.ctx); // need resource handler
+
+            //      this.SpaceShip = new SpaceShip(this.cnvs.width/3, this.cnvs.height / 2, 'imgs/rocket.png',canvas, this.ctx); // need resource handler
             this.StarSky = new StarSky(this.cnvs, this.StarsAmount);
             this.haveTouch = false;
             this.gameoverView = new GOView();
-          
+
 
             this.on("SpaceShipCrash", function() {
                 console.log("CRASH!")
@@ -106,7 +106,7 @@ define([
 
             this.rotRateGamma = 0;
             this.rotRateAlpha = 0;
-           
+
 
             $(window).bind("resize", function() {
                 resizeGame()
@@ -118,16 +118,16 @@ define([
 
             });
         },
-        initToken : function(){
+        initToken: function() {
             console.log('initToken')
             this.message.innerHTML = 'ready';
             var self = this;
             // Если id нет
-            if (!localStorage.getItem('consoleguid')){
+            if (!localStorage.getItem('consoleguid')) {
                 // Получаем токен
-                this.server.getToken(function(token){   
+                this.server.getToken(function(token) {
                     $('#message').html('token: ' + token);
-                  //  self.gameToken = token
+                    //  self.gameToken = token
 
                 });
             } else { // иначе
@@ -138,19 +138,21 @@ define([
             }
         },
         // Переподключение
-        reconnect : function(){
+        reconnect: function() {
             console.log('reconnect')
             var self = this; // надо сохранять контекст
 
             // Используем сохранненный id связки
-            this.server.bind({guid: localStorage.getItem('consoleguid')}, function(data){
+            this.server.bind({
+                guid: localStorage.getItem('consoleguid')
+            }, function(data) {
                 // Если все ок
-                if (data.status == 'success'){
+                if (data.status == 'success') {
                     // Стартуем
                     console.log('starx');
                     self.start(data.guid);
-                // Если связки уже нет
-                } else if (data.status == 'undefined guid'){
+                    // Если связки уже нет
+                } else if (data.status == 'undefined guid') {
                     // Начинаем все заново
                     localStorage.removeItem('consoleguid');
                     self.initToken();
@@ -159,59 +161,53 @@ define([
         },
 
 
-       start: function(guid){
-           console.log('start from serv')
-           // Сохраняем id связки
-           localStorage.setItem('consoleguid', guid);
-           $('#message').html('game');
-           this.useController = true;
-           this.Start(this);
-       },
+        start: function(guid) {
+            console.log('start from serv')
+            // Сохраняем id связки
+            localStorage.setItem('consoleguid', guid);
+            $('#message').html('game');
+            this.useController = true;
+            this.Start(this);
+        },
 
 
-        initServer: function() {            
+        initServer: function() {
 
-            var self =  this;
+            var self = this;
             // На подключении игрока стартуем игру
-            this.server.on('player-joined', function(data){
+            this.server.on('player-joined', function(data) {
                 // Передаем id связки консоль-джостик
                 console.log('player join')
                 self.start(data.guid);
             });
 
-         
+
             this.server.on('reconnect', this.reconnect);
-          
 
-          
 
-           // this.initToken();
+
+            // this.initToken();
 
             // Обмен сообщениями
-            this.server.on('message', function(data, answer){
+            this.server.on('message', function(data, answer) {
 
-                if(data.type == 'restart') {
+                if (data.type == 'restart') {
                     self.Stop(false);
                     self.Start(self);
                     console.log('restart');
                 }
 
-                if(data.type == 'touch')
-                {
-                    if(!self.running) {
+                if (data.type == 'touch') {
+                    if (!self.running) {
                         self.Start(self);
                     }
                     self.haveTouch = true
-                }
-                else if(data.type == 'rotate')
-                {
-                  //  console.log(data.alpha,' ', data.beta)
+                } else if (data.type == 'rotate') {
+                    //  console.log(data.alpha,' ', data.beta)
                     self.rotRateAlpha = data.alpha
                     self.rotRateBeta = data.beta
-                }
-                else if(data.type == 'orient')
-                {
-            //        console.log('Rotation angle: ' + data.angle)
+                } else if (data.type == 'orient') {
+                    //        console.log('Rotation angle: ' + data.angle)
                     self.orientation = data.angle
                 }
                 answer('answer');
@@ -228,7 +224,7 @@ define([
 
             game.fps = 60; // возвращаем старое значение
 
-            game.SpaceShip = new SpaceShip(game.cnvs.width/3, game.cnvs.height / 2, 'imgs/rocket.png',game.cnvs, game.ctx); 
+            game.SpaceShip = new SpaceShip(game.cnvs.width / 3, game.cnvs.height / 2, 'imgs/rocket.png', game.cnvs, game.ctx);
 
             game.AsteroidContainer = new AsteroidContainer(game.cnvs);
 
@@ -238,19 +234,22 @@ define([
 
             game.AsteroidContainer.createAsteroids(game.AsteroidAmount);
 
-            game.interval = setInterval(function() { game.render(); }, 1000/game.fps);
+            game.interval = setInterval(function() {
+                game.render();
+            }, 1000 / game.fps);
 
             game.coldet = new CollisionDetector();
 
-            game.scoreInterval = setInterval(function() {game.score += 1;}, 200)
+            game.scoreInterval = setInterval(function() {
+                game.score += 1;
+            }, 200)
             $(window).unbind("keypress");
 
-            if(!game.useController)
-            {
-                document.body.addEventListener("keydown", function (e) {
+            if (!game.useController) {
+                document.body.addEventListener("keydown", function(e) {
                     game.keys[e.keyCode] = true;
                 });
-                document.body.addEventListener("keyup", function (e) {
+                document.body.addEventListener("keyup", function(e) {
                     game.keys[e.keyCode] = false;
                 });
             }
@@ -259,26 +258,26 @@ define([
         },
 
         Stop: function(gameover) {
-                if(this.running) {
-                  if(gameover) {
+            if (this.running) {
+                if (gameover) {
                     this.Util.clear(this.ctx);
                     this.gameoverView.show(this.score);
                     this.server.send({
                         type: 'gameover',
                         score: this.score
                     })
-                  }
-                  $(window).unbind("keypress");
-                  $(window).unbind("resize");
-                  $(window).unbind("ready");
-                  this.StarSky.deleteStars();
-                  this.AsteroidContainer.deleteAsteroids();
-                  clearInterval(this.interval);
-                  clearInterval(this.scoreInterval);
-                  this.clearcanvas(this.ctx); 
-                  this.running = false;
-                  console.log("clearing")
                 }
+                $(window).unbind("keypress");
+                $(window).unbind("resize");
+                $(window).unbind("ready");
+                this.StarSky.deleteStars();
+                this.AsteroidContainer.deleteAsteroids();
+                clearInterval(this.interval);
+                clearInterval(this.scoreInterval);
+                this.clearcanvas(this.ctx);
+                this.running = false;
+                console.log("clearing")
+            }
         },
 
         clearcanvas: function(ctx) {
@@ -287,17 +286,17 @@ define([
         },
 
         findCollision: function() {
-           // debugger
+            // debugger
             this.coldet.ObjectCollisionWithObjectArray(this.SpaceShip, this.AsteroidContainer.asteroids);
             this.coldet.ObjectCollisionWithObjectArray(this.SpaceShip, this.EnemyContainer.enemies);
             this.coldet.ObjectArrayCollisionWithObjectArray(this.SpaceShip.bulletContainer.bullets,
-             this.EnemyContainer.enemies);
+                this.EnemyContainer.enemies);
             this.coldet.ObjectArrayCollisionWithObjectArray(this.SpaceShip.bulletContainer.bullets,
-             this.AsteroidContainer.asteroids);
+                this.AsteroidContainer.asteroids);
         },
 
         render: function() {
-           // this.clearcanvas(this.ctx);
+            // this.clearcanvas(this.ctx);
             this.StarSky.update();
             this.AsteroidContainer.update();
             this.EnemyContainer.update();
@@ -310,7 +309,7 @@ define([
             this.EnemyContainer.draw(this.ctx);
             this.SpaceShip.draw(this.ctx);
             ExplosionManager().$class.draw(this.ctx);
-            this.Util.drawscore(this.ctx,this.score);
+            this.Util.drawscore(this.ctx, this.score);
         }
 
     });

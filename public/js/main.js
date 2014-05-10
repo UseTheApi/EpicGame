@@ -18,7 +18,7 @@ require.config({
         'underscore': {
             exports: '_'
         },
-        'classy' : {
+        'classy': {
             exports: 'Class',
         },
         'socket.io': {
@@ -31,6 +31,6 @@ define([
     'router'
 ], function(
     router
-){
+) {
     Backbone.history.start();
 });

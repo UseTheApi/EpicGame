@@ -14,11 +14,11 @@ define([
 	Core,
 	BulletContainer,
 	ExplosionManager
-){
+) {
 	var SpaceShip = Class.$extend({
-		__init__ : function(x,y,src,cnvs, ctx) {
+		__init__: function(x, y, src, cnvs, ctx) {
 
-		//	console.log(x, 'x y ', y)
+			//	console.log(x, 'x y ', y)
 
 			this.name = 'SpaceShip'
 			var ship = this;
@@ -30,11 +30,11 @@ define([
 			this.y = y;
 			this.sWidth = 125; // spaceship width
 			this.sHeight = 53; // spaceship height
-			this.collisionRadius = this.sHeight/2 * 0.8;
+			this.collisionRadius = this.sHeight / 2 * 0.8;
 			this.collisionShiftX = this.sWidth * 0.75;
-			this.collisionShiftY = this.sHeight/2;
+			this.collisionShiftY = this.sHeight / 2;
 			this.core = new Core()
-			this.dy = 3; 
+			this.dy = 3;
 			this.dx = 3;
 			this.gravity = 0.025;
 			this.vy = 0; // vertical speed
@@ -46,9 +46,9 @@ define([
 			this.im.src = 'imgs/fail_rocket.png'
 			this.fail = false;
 			//this.explosionManager = new ExplosionManager()
-			this.bulletContainer = new BulletContainer(this.cnvs,this.ctx)
+			this.bulletContainer = new BulletContainer(this.cnvs, this.ctx)
 			this.explosionColors = ['#FF0533', '#EB0CA8', '#870515', '#CC5027', '#853707', '#FF6600'];
-			this.image.onload = function () { 
+			this.image.onload = function() {
 				ship.imgLoaded = true;
 			}
 		},
@@ -63,9 +63,9 @@ define([
 
 		collisionReact: function(obj) {
 			var objName = obj.getName()
-			if((objName == 'Asteroid') || (objName == 'Enemy')) {
-				var explosion = new ExplosionClass(this.x + this.collisionShiftX, 
-					this.y + this.collisionShiftY, 
+			if ((objName == 'Asteroid') || (objName == 'Enemy')) {
+				var explosion = new ExplosionClass(this.x + this.collisionShiftX,
+					this.y + this.collisionShiftY,
 					this.explosionColors,
 					55, 30, 800)
 				ExplosionManager().$class.addExplosion(explosion)
@@ -74,120 +74,117 @@ define([
 			}
 		},
 
-		update : function(game) {
+		update: function(game) {
 
-			
 
-			if(!this.fail) {
-			if(game.useController)
-			{
-				var alpha = game.rotRateAlpha/5
-				var beta = game.rotRateBeta/10
-				//console.log(alpha, ' a-b ', beta)
 
-				switch(game.orientation)
-				{
-					case 0:
-						this.vx = game.rotRateBeta/10
-						this.vy = game.rotRateAlpha/5
-						break;
-					case 90:
-						this.vx = alpha
-						this.vy = -beta
-						break;
-					case -90:
-						this.vx = -alpha
-						this.vy = beta
-						break;
-					case 180:
-						this.vx = -beta
-						this.vy = -alpha
-						break;
+			if (!this.fail) {
+				if (game.useController) {
+					var alpha = game.rotRateAlpha / 5
+					var beta = game.rotRateBeta / 10
+					//console.log(alpha, ' a-b ', beta)
+
+					switch (game.orientation) {
+						case 0:
+							this.vx = game.rotRateBeta / 10
+							this.vy = game.rotRateAlpha / 5
+							break;
+						case 90:
+							this.vx = alpha
+							this.vy = -beta
+							break;
+						case -90:
+							this.vx = -alpha
+							this.vy = beta
+							break;
+						case 180:
+							this.vx = -beta
+							this.vy = -alpha
+							break;
+					}
+
+
+
+					if (game.haveTouch) {
+						this.bulletContainer.createBullet(this.x + this.sWidth, this.y + this.sHeight / 2, this.ctx)
+						game.haveTouch = false
+					}
+				} else {
+					if (game.keys[38]) { // up
+						this.vy = -this.dy;
+						this.direction = '';
+					}
+					if (game.keys[40]) { //down
+						this.vy = this.dy;
+						this.direction = '';
+
+					}
+					if (game.keys[37]) { // back
+						this.vx = -this.dx;
+						this.direction = '';
+
+					}
+					if (game.keys[39]) { // forward
+						this.vx = this.dx;
+						this.direction = '';
+					}
+					if (game.keys[32]) { //attack with bullet
+						//debugger
+						this.bulletContainer.createBullet(this.x + this.sWidth, this.y + this.sHeight / 2, this.ctx)
+						game.keys[32] = false;
+					}
 				}
-
-				
-
-				if(game.haveTouch)
-				{
-					this.bulletContainer.createBullet(this.x + this.sWidth, this.y + this.sHeight/2, this.ctx)
-					game.haveTouch = false
-				}
-			}
-			else
-			{
-				if(game.keys[38]) { // up
-					this.vy = -this.dy; this.direction = ''; 
-				}
-				if(game.keys[40]) { //down
-					this.vy = this.dy; this.direction = '';  
-
-				}
-				if(game.keys[37]) { // back
-					this.vx = -this.dx; this.direction = ''; 
-
-				}
-				if(game.keys[39]) { // forward
-					this.vx = this.dx; this.direction = ''; 
-				}
-				if(game.keys[32]) { //attack with bullet
-					//debugger
-					this.bulletContainer.createBullet(this.x + this.sWidth, this.y + this.sHeight/2, this.ctx)
-					game.keys[32] = false;
-				}
-			}
-			//this.vy += this.gravity; // need gravity or not?
-			this.y += this.vy;
-			this.x += this.vx;
+				//this.vy += this.gravity; // need gravity or not?
+				this.y += this.vy;
+				this.x += this.vx;
 
 
 
-			this.vy *= 0.98; // friction 
-			this.vx *= 0.98;
-			this.bulletContainer.update();
-			}
-			else {
+				this.vy *= 0.98; // friction 
+				this.vx *= 0.98;
+				this.bulletContainer.update();
+			} else {
 				game.fps = 4;
 				this.vy += this.gravity;
 				this.y += this.vy;
 			}
-			if(this.core.isValid()) {
-				this.core.update(this.x + this.collisionShiftX, 
-					this.y + this.collisionShiftY, 
+			if (this.core.isValid()) {
+				this.core.update(this.x + this.collisionShiftX,
+					this.y + this.collisionShiftY,
 					this.collisionRadius);
 			}
 
-			if(this.out(game)) {
+			if (this.out(game)) {
 				game.trigger("SpaceShipCrash");
 			}
 		},
 
 		out: function(game) {
-			if(this.y > this.cnvs.width-178-22 || this.y < -this.sHeight) {
+			if (this.y > this.cnvs.width - 178 - 22 || this.y < -this.sHeight) {
 				return true;
 			}
-		//	if(this.y > this.cnvs.height) this.y = this.sHeight;
-		//	if(this.y < -this.sHeight) this.y  = this.cnvs.height;
-			if(this.x>this.cnvs.width) this.x = -this.sWidth; 
-			if(this.x<-this.sWidth) this.x = this.cnvs.width;
+			//	if(this.y > this.cnvs.height) this.y = this.sHeight;
+			//	if(this.y < -this.sHeight) this.y  = this.cnvs.height;
+			if (this.x > this.cnvs.width) this.x = -this.sWidth;
+			if (this.x < -this.sWidth) this.x = this.cnvs.width;
 		},
 
-		draw : function(ctx) {
-			if(this.imgLoaded == true) {
-				if(this.fail) {
-					ctx.drawImage(this.im, this.x + this.sWidth/2, this.y, 
+		draw: function(ctx) {
+			if (this.imgLoaded == true) {
+				if (this.fail) {
+					ctx.drawImage(this.im, this.x + this.sWidth / 2, this.y,
 						this.sHeight, this.sWidth)
-				}
-				else {
-					if(isNaN(this.x) || isNaN(this.y)) {
+				} else {
+					if (isNaN(this.x) || isNaN(this.y)) {
 						this.x = 214;
 						this.y = 214;
 					}
 					//console.log('draw spaceship hfdsfa',this.x,this.y)
-   				    ctx.drawImage(this.image, this.x, this.y,
-				    this.sWidth, this.sHeight);
-				    this.bulletContainer.draw(ctx)
+					ctx.drawImage(this.image, this.x, this.y,
+						this.sWidth, this.sHeight);
+					this.bulletContainer.draw(ctx)
 				}
-				}
+			}
 		}
 	})
 	return SpaceShip;
