@@ -36,7 +36,7 @@ require(['../js/lib/Connector.js'], function(Connector) {
 		window.addEventListener('touchstart', touch);
 
 		var message = document.getElementById('message');
-		var input = document.getElementById('token');
+		var input = document.getElementById('token form-control');
 		var start, init, reconnect;
 
 
@@ -65,22 +65,24 @@ require(['../js/lib/Connector.js'], function(Connector) {
 			// Если id нет
 			if (!localStorage.getItem('playerguid')) {
 				// Ждем ввода токена
-				input.parentNode.addEventListener('submit', function(e) {
-					e.preventDefault();
+				$('#connect').click(function() {
+                    console.log('sending token')
+				//	e.preventDefault();
 
 					// И отправляем его на сервер
-					server.bind({
+					self.server.bind({
 						token: input.value
 					}, function(data) {
 						if (data.status == 'success') { //  В случае успеха
 							// Стартуем джостик
-							start(data.guid);
+							self.start(data.guid);
 						}
-					});
-				}, false);
+					})
+				})
 
 			} else { // иначе
 				// переподключаемся к уже созданной связке
+                console.log('reconnect')
 				reconnect();
 			}
 		};
