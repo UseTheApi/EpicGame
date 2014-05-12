@@ -33,7 +33,7 @@ require(['../js/lib/Connector.js'], function(Connector) {
 
 		window.addEventListener("devicemotion", motion, false);
 		window.addEventListener('orientationchange', changeOrient);
-		window.addEventListener('touchstart', touch);
+		//window.addEventListener('touchstart', touch);
 
 		var message = document.getElementById('message');
 		var input = document.getElementById('token form-control');
@@ -139,13 +139,18 @@ require(['../js/lib/Connector.js'], function(Connector) {
 			//console.log(alpha,betta,gamma);
 		};
 
-		function touch(evt) {
-			server.send({
-				type: 'touch',
+        $('#shoot').on('touchstart', function() {
+            $('#shoot').css('background-color', 'red')
+			console.log('touchstart');
+		});
 
-			});
-			//console.log(alpha,betta,gamma);
-		};
+        $('#shoot').on('touchend', function() {
+            server.send({
+                type: 'touch'
+            });
+            $('#shoot').css('background-color', 'none')
+            console.log('touchend');
+        });
 
 		// Старт игры
 		start = function(guid) {
@@ -153,6 +158,7 @@ require(['../js/lib/Connector.js'], function(Connector) {
 			// Сохраняем id связки
 			localStorage.setItem('playerguid', guid);
 			message.innerHTML = 'game';
+
 		};
 
 

@@ -15,15 +15,26 @@ body {
     margin-bottom: 20px;
 }
 
+.joystick_control_form-text
+{
+    color: white;
+}
+
 .joystick_control-form
 {
     text-align: center;
-    position: fixed;
-    top: 50%;
 }
 
 .joystick_shoot-button
 {
     position: fixed;
+    bottom: 0;
+    right: 0;
+}
 
+.joystick_rules
+{
+    text-align: center;
+    color: white;
+    margin-bottom: 50px;
 }

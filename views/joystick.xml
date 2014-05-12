@@ -19,9 +19,14 @@
 		    <link rel="stylesheet" type="text/css" href="client/css/main.css" />
 	</head>
 	<body>
-        <div class="logo" style="background: url(../../../imgs/logo.png)"></div>
-        <div class="joystick_control-form container">
+        <div class="joystick_rules">
+            <h1>To play with joystick:</h1>
+            <h2>Tilt UP/DOWN to adjust spaceship height</h2>
+            <h2>tilt LEFT/RIGHT to move forward/backward</h2>
+        </div>
+        <div class="joystick_control-form">
             <form>
+                <h3 class="joystick_control_form-text">Please, enter the TOKEN you have received on game screen</h3>
                 <div class="joystick_control_form-token form-group">
                     <input id="token form-control"/>
                     <button id="connect" type="submit">connect</button>
@@ -31,7 +36,7 @@
 
 		<div id="message"></div>
         </div>
-        <div class="joystick_shoot-button">
+        <div class="joystick_shoot-button" id="shoot">
             <img src="../../imgs/fire.png"/>
         </div>
 	</body>
