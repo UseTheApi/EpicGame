@@ -140,7 +140,7 @@ require(['../js/lib/Connector.js'], function(Connector) {
 		};
 
         $('#shoot').on('touchstart', function() {
-            $('#shoot').css('background-color', 'red')
+            $('#shoot').css('-webkit-filter', 'grayscale()')
 			console.log('touchstart');
 		});
 
@@ -148,7 +148,7 @@ require(['../js/lib/Connector.js'], function(Connector) {
             server.send({
                 type: 'touch'
             });
-            $('#shoot').css('background-color', 'none')
+            $('#shoot').css('-webkit-filter', 'initial')
             console.log('touchend');
         });
 
